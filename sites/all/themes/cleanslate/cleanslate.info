@@ -1,0 +1,33 @@
+name = Clean Slate
+description = A Clean Slate to start with (with lots of the annoying work already done) You're welcome...
+version = VERSION
+core = 7.x
+engine = phptemplate
+
+;CSS
+stylesheets[all][] = css/style.css
+
+; JS
+
+scripts[] = bower_components/imagesloaded/imagesloaded.pkgd.min.js
+scripts[] = bower_components/jquery.fitvids/jquery.fitvids.js
+scripts[] = bower_components/jquery.stellar/jquery.stellar.min.js
+scripts[] = bower_components/masonry/dist/masonry.pkgd.min.js
+scripts[] = bower_components/waypoints/lib/jquery.waypoints.min.js
+scripts[] = js/init.js
+
+; REGIONS
+regions[page_top] = Page top
+regions[header] = Header
+regions[nav_main] = Main Navigation
+regions[highlight] = Highlight
+regions[help] = Help
+regions[content] = Content
+regions[sidebar_first] = First sidebar
+regions[footer_main] = Footer Main
+regions[footer_left] = Footer Left
+regions[footer_right] = Footer Right
+regions[page_bottom] = Page bottom
+
+; PANEL LAYOUTS
+plugins[panels][layouts] = layouts

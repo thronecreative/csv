@@ -1,0 +1,200 @@
+<?php
+
+/**
+ * @file
+ * Main module file
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function newpagepreview_menu() {
+  $items['newpagepreview/%'] = array(
+    'title' => 'New Page Preview',
+    'description' => 'Menu callback for open preview in New tab.',
+    'page callback' => 'newpagepreview_deliver_page',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  
+  $items['admin/structure/previewsetup'] = array(
+		'title' => 'Preview Settings',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('newpagepreview_form'),
+		'access arguments' => array('administer preview settings'),
+		'type' => MENU_NORMAL_ITEM,
+	);
+	
+  return $items;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function newpagepreview_form_alter(&$form, &$form_state, $form_id) {
+  if (!empty($form['#node_edit_form'])) {
+    if ($form['actions']['preview']) {
+      $form['actions']['preview']['#submit'] = array('newpagepreview_node_form_build_preview');
+    }
+  }
+}
+
+/**
+ * Submit callback for Preview Button
+ */
+function newpagepreview_node_form_build_preview($form, &$form_state) {
+  $node = node_form_submit_build_node($form, $form_state);
+  $node->newpagepreview = TRUE;
+
+  // Get the expected URL alias from Pathauto, if applicable.
+  if (module_exists('pathauto') && (!isset($node->path['pathauto']) || $node->path['pathauto'])) {
+    module_load_include('inc', 'pathauto');
+    $src = "node/" . $node->nid;
+    $alias = pathauto_create_alias('node', 'return', $src, array('node' => $node), $node->type, $node->language);
+    if ($alias) {
+      $node->path['alias'] = $alias;
+    }
+  }
+
+  // Cache the temporary node
+  $preview_id = md5(json_encode($form_state['values']) . mt_rand());
+  cache_set($preview_id, $node, 'cache_newpagepreview', CACHE_TEMPORARY);
+  
+  //open preview in new tab
+  $path = base_path() . 'newpagepreview/' . $preview_id;    
+  drupal_set_message('<h1>If the preview is not open in popup, please click <a href="'.$path.'" target="_blank">here</a> to view preview.</h1>','warning');  
+  drupal_add_js('window.open("'.$path.'");', 'inline'); 
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Menu callback for "newpagepreview/%".
+ */
+function newpagepreview_deliver_page($preview_id) {
+  // Get the cached temporary node.
+  $node = newpagepreview_cache_get($preview_id);
+  
+  // If we don't have a valid node for whatever reason, quit here.
+  if (!$node) {
+    drupal_exit();
+  }
+
+  // Change the preview's page title.
+  drupal_set_title($node->title);
+
+  // Overrides $_GET['q'] so that other elements on the page can react to the proper path context
+  if ($node->nid) {
+    $_GET['q'] = 'node/' . $node->nid;
+  }
+  elseif (!empty($node->path['alias'])) {
+    $_GET['q'] = trim($node->path['alias'], '/');
+  }
+
+  // Allow other modules to alter the node or execute code before building the preview.
+  drupal_alter('newpagepreview_node', $node);
+
+  $preview = newpagepreview_build_preview($node);
+  
+  // Switch to the anonymous user for page rendering.
+  global $user;
+  drupal_save_session(FALSE);
+  $user = user_load(0);  
+  module_invoke_all('suppress'); // Suppress fancy stuff like admin and admin_menu.module for the preview.
+  drupal_deliver_page($preview);   // Deliver the page output.  
+}
+
+/**
+ * Return a preview object from cache.
+ */
+function newpagepreview_cache_get($preview_id) {
+  $cache = cache_get($preview_id, 'cache_newpagepreview');
+  return ($cache) ? $cache->data : FALSE;
+}
+
+/**
+ * Function for node_preview().
+ */
+function newpagepreview_build_preview($node) {
+  if (node_access('create', $node) || node_access('update', $node)) {
+    _field_invoke_multiple('load', 'node', array($node->nid => $node));
+    // Load the user's name when needed.
+    if (isset($node->name)) {
+      // The use of isset() is mandatory in the context of user IDs, because
+      // user ID 0 denotes the anonymous user.
+      if ($user = user_load_by_name($node->name)) {
+        $node->uid = $user->uid;
+        $node->picture = $user->picture;
+      }
+      else {
+        $node->uid = 0; // anonymous user
+      }
+    }
+    elseif ($node->uid) {
+      $user = user_load($node->uid);
+      $node->name = $user->name;
+      $node->picture = $user->picture;
+    }
+
+    $node->changed = REQUEST_TIME;
+    $nodes = array($node->nid => $node);
+    field_attach_prepare_view('node', $nodes, 'full');
+
+    // Display a preview of the node.
+    if (!form_get_errors()) {
+      $node->in_preview = TRUE;
+      // If enabled, allow page_manager.module to handle node rendering.
+      if (module_exists('page_manager')) {
+        // Load my task plugin
+        $task = page_manager_get_task('node_view');
+
+        // Load the node into a context.
+        ctools_include('context');
+        ctools_include('context-task-handler');
+        $contexts = ctools_context_handler_get_task_contexts($task, '', array($node));
+
+        $output = ctools_context_handler_render($task, '', $contexts, array($node->nid));
+        // Page manager is not handeling node_view
+        if ($output === FALSE) {
+          $output = node_view($node, 'full');
+        }
+      }
+      else {
+        $output = node_view($node, 'full');
+      }
+      unset($node->in_preview);
+      // Rather than the default t('Preview') allow user to see more acurate rendering
+      drupal_set_title($node->title);
+    }
+
+    return $output;
+  }
+}
+
+/**
+ * admin configuration page
+ */
+function newpagepreview_form($form, &$form_state) {
+	$node_types  = node_type_get_names(); //get all node types in site
+	$seleted_types  = variable_get('preview_content_types');  //get seleted types
+	
+	$form['preview_content_types'] = array( //content type lists
+		'#type' => 'checkboxes',
+		'#title' => t('Content Types'),
+		'#options' => $node_types,
+		'#description' =>t('Choose node types here to enable preview'),
+		'#default_value' => !empty($seleted_types) ? variable_get('preview_content_types') : array(),
+	);
+
+	if(!empty($seleted_types)){		
+		foreach($seleted_types as $typename=>$typeval){
+			if($typeval != '0'){
+				variable_set('node_preview_' . $typename, '1'); //enable preview
+			}else{
+				variable_set('node_preview_' . $typename, '0'); //disable preview
+			}
+		}
+	}
+	  
+	return system_settings_form($form);
+}

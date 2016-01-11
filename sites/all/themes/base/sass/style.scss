@@ -1,0 +1,624 @@
+@import "compass";
+@import "_reset";
+@import "_fonts";
+@import "_icons";
+@import "_base"; 
+  
+/* BASIC STYLES
+-------------------------------------------------------------- */
+*{
+  @include box-sizing('border-box');
+
+  img{
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+body{
+  font: 16px/1.5 $font_main;
+  background-color: $page_bg;  
+  color: $color_main;
+}
+
+a{
+  @include transition;
+  color: $color_accent;
+  text-decoration: none;
+  
+  &:hover{
+    color: $color_main;
+  }
+}
+
+
+ul,
+ul.menu,
+ul.menu li{
+  list-style: none;
+  text-align: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+li a.active,
+li.opened span.nolink{color: $color_main;}
+
+h1, h2, h3, h4{
+  font-family: $font_header;
+  font-style: italic;
+  font-weight: normal;
+
+  span{
+    font-weight: bold;
+  }
+}
+
+h1{
+  font-weight: bold;
+}
+
+/* HEADER
+-------------------------------------------------------------- */
+#header-main{
+  display: none;
+}
+
+#logo{
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  font-size: 40px;
+  text-transform: uppercase;
+  color: $page_lt;
+  font-family: $font_header;
+  font-weight: normal;
+  font-style: italic;
+  letter-spacing: 2px;
+  z-index: 800;
+
+  span{
+    font-weight: bold;
+  }
+
+  @include bp(m){
+    top: 20px;
+    left: 20px;
+    font-size: 20px;
+  }
+}
+
+/* NAV
+-------------------------------------------------------------- */
+#nav-holder{
+  position: fixed;
+  top: 0;
+  right: 0;
+  text-align: right;
+  width: $nav_w;
+  z-index: 3000;
+
+  .divider{
+    position: relative;
+    right: 100-$nav_w+20;
+  }
+
+  .bg{ 
+    position: absolute;
+    top: -10vh;
+    left: -20%;
+    bottom: 0;
+    right: 0;
+    width: 130%;
+    height: 110vh;
+
+    background-color: rgba($color_accent, 0.9);
+    z-index: 1;
+    @include transform(rotate(-3deg));
+
+  }
+
+}
+
+#nav{
+  @include transition;
+  position: absolute;
+  z-index: 800;
+  top: 0;
+  padding-top: $body_pad + $header_height*2;
+  right: -$nav_w;
+  height: 100vh;
+  width: $nav_w;
+  padding-right: $body_pad;
+  background: url(../images/30kft-pattern-1.jpg) fixed;
+  
+  @include bp(s){
+    padding-top: 80px;
+  }
+
+  a{
+    color: $color_main;
+      font-size: 30px;
+      &:hover{
+        color: #fff;
+      }
+
+      @include bp(s){
+        font-size: 20px;
+      }
+  }
+
+  ul{
+    z-index: 100;
+    position: relative;
+
+    a{
+      font-weight: 900;
+      font-family: $font_header;
+    }
+  }
+
+  li{
+    margin-bottom: $body_pad;
+
+    @include bp(s){
+      margin-bottom: 10px;
+    }
+  }
+
+  .social-icons{
+    z-index: 100;
+    position: relative;
+    
+    a{
+      margin-left: 20px;
+
+      &:hover{
+        color: #fff;
+      }
+    }
+  }
+}
+
+
+#menu-toggle{
+  @include transition;
+  position: absolute;
+  z-index: 900;
+  top: $body_pad;
+  right: $body_pad;
+  color: $color_main;
+  width: $header_height;
+  height: $header_height;
+  line-height: $header_height;
+  text-align: center;
+  font-size: 1.2em;
+  cursor: pointer;
+
+  .icon-cross{
+    opacity: 0;
+  }
+
+  .icon-menu,
+  .icon-cross{
+    @include transition;
+    text-align: inherit;
+    line-height: inherit;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover{
+    background-color: #fff;
+  }
+
+  @include bp(s){
+    display: block;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.nav-open{
+  //overflow: hidden;
+
+  #wrap{
+    margin-left: -$nav_w;
+  }
+
+  #nav{
+    right: 0;
+  }
+
+  #menu-toggle{
+    color: $page_lt;
+    background-color: $color_main;
+
+    .icon-cross{
+      opacity: 1;
+    }
+    .icon-menu{
+      opacity: 0;
+    }
+  }
+}
+
+
+/* INTRO
+-------------------------------------------------------------- */
+#intro{
+  @include bg_cover("../images/lighthouse-1.jpg");
+  min-height: 100vh;
+  position: relative;
+  color: #fff;
+  z-index: 1;
+
+  h2{
+    position: absolute;
+    top: 60px;
+    left: 40px;
+    font-family: $font_main;
+    font-weight: 200;
+    font-size: 120px;
+    font-style: normal;
+
+    span{
+      display: block;
+      margin: -90px 0 0 260px;
+      font-weight: 200;
+    }
+
+    @include bp(l){
+      font-size: 80px;
+
+      span{
+        margin-top: -60px;
+        margin-left: 180px;
+      }
+    }
+
+    @include bp(m){
+      font-size: 40px;
+      left: 20px;
+      top: 40px;
+
+      span{
+        margin-top: -30px;
+        margin-left: 90px;
+      }
+    }
+  }
+
+  .divider{
+    @include transform(rotate(135deg));
+    position: absolute;
+    top: 300px;
+    left: 700px;
+    height: 10px;
+    width: 600px;
+    background-color: #fff;
+
+    @include bp(l){
+      left: 280px;
+    }
+
+    @include bp(m){
+      left: -80px;
+      top: 250px;
+    }
+  }
+
+  .scroll{
+    font-family: $font_header;
+    position: absolute;
+    bottom: 140px;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 4px;
+    font-weight: normal;
+    font-style: italic;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+}
+
+/* IMAGE DIVIDERS
+-------------------------------------------------------------- */
+.image-divider{
+  min-height: 100vh;
+}
+
+#divider-1{
+   @include bg_cover("../images/sailboat-1.jpg");
+}
+
+#divider-2{
+   @include bg_cover("../images/ocean-1.jpg");
+}
+
+
+
+/* SECTIONS
+-------------------------------------------------------------- */
+
+.bar-top{
+  content: " ";
+  position: absolute;
+  
+  left: 00;
+  width: 100%;
+  height: 200px;
+  margin-top: -100px;
+  background-color: #fff;
+  z-index: 1;
+  @include transform(rotate(-2deg) skew(-2deg));
+}
+
+.bar-bot{
+  @extend .bar-top;
+  top: auto;
+  bottom: -200px;
+}
+
+section.info{
+  @include pie-clearfix;
+  text-align: right;
+  position: relative;
+  margin-bottom: 150px;
+
+  .inner{
+    position: relative;
+    z-index: 100;
+    padding-right: 150px;
+    
+  }
+
+  h1{
+    font-size: 80px;
+    text-transform: uppercase;
+
+    @include bp(m){
+      font-size: 60px;
+    }
+  }
+
+  h2{
+    font-size: 30px;
+    line-height: 30px;
+    margin-bottom: 40px;
+
+    @include bp(m){
+      font-size: 20px;
+    }
+  }
+
+  p{
+    max-width: 500px;
+    position: relative;
+    float: right;
+    clear: both;
+    font-weight: 200;
+    font-size: 18px;
+    margin-bottom: 20px;
+
+    span{
+      font-weight: normal;
+    }
+  }
+}
+
+/* WYNN / TEAM
+-------------------------------------------------------------- */
+#about,
+#team{
+
+  &:before{
+    @extend .bar-top;
+  }
+}
+
+#colonel{
+  &:before{
+    @extend .bar-bot;
+  }
+
+  .inner{
+    padding-top: 200px;
+  }
+
+  .cover{
+    position: absolute;
+    top: 200px;
+    right: 800px;
+    max-width: 600px;
+  }
+}
+
+/* CONTACT
+-------------------------------------------------------------- */
+#contact{
+  background-color: $page_lt;
+  text-align: center;
+  margin-bottom: 0;
+
+  .body{
+    font-weight: 200;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .phone,
+  .email,
+  .address{
+    font-family: $font_header;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 30px;
+  }
+
+  .email{
+    text-transform: uppercase;
+  }
+
+  .divider{
+    width: 100px;
+    height: 5px;
+    background-color: $color_accent;
+    margin: 40px auto;
+    @include transform(rotate(-5deg));
+  }
+
+  .social-icons{
+    font-size: 30px;
+
+    a{
+      margin: 0 10px;
+    }
+  }
+
+
+  &:before{
+    @extend .bar-top;
+    background-color: $page_lt;
+  }
+
+  &:after{
+    @extend .bar-bot;
+    background-color: $page_lt;
+    margin-bottom: 100px;
+  }
+}
+
+.copy{
+  font-family: $font_fancy;
+  text-align: center;
+  background-color: $color_accent;
+  padding: 180px 0 80px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+/* QUOTE
+-------------------------------------------------------------- */
+.quote{
+  position: relative;
+  
+
+  .inner{
+    max-width: 800px;
+    padding: 80px;
+    position: relative;
+    z-index: 100;
+
+    &:before{
+      content: " ";
+      position: absolute;
+      top: 0;
+      left: -20%;
+      right: 0;
+      bottom: 0;
+      width: 120%;
+      background-color: $page_lt;
+      z-index: -1;
+      @include transform(rotate(-5deg));
+    }
+  }
+
+  .body{
+    font-family: $font_header;
+    font-size: 30px;
+    font-weight: normal;
+    font-style: italic;
+    text-align: justify;
+  }
+
+  .author{
+    font-family: $font_main;
+    text-align: right;
+    margin-top: 10px;
+    font-weight: 200;
+    font-size: 20px;
+    font-style: normal;
+  }
+}
+
+#quote-2{
+  &:before{
+    @extend .bar-bot;
+    margin-bottom: 100px;
+  }
+}
+
+/* PROJECTS
+-------------------------------------------------------------- */
+#projects{
+  @include pie-clearfix;
+  padding-bottom: 100px;
+
+  &:before{
+    @extend .bar-top;
+    margin-bottom: 100px;
+  }
+}
+
+.projects{
+  text-align: right;
+
+  .views-row{
+    @include inline-block;
+    width: 33%;
+    max-width: 400px;
+
+  }
+}
+
+.project.teaser{
+  text-align: right; 
+  padding: 10px;
+
+  .cover{
+    margin-bottom: 20px;
+  }
+
+  img{
+    width: 100%;
+    height: auto;
+  }
+
+  h2{
+    font-size: 30px;
+    text-align: right;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+
+  h3{
+    font-family: $font_fancy;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-style: normal;
+  }
+}
+
+
+.krumo-root{
+  z-index: 1000;
+}
+
+.service-links{
+
+  li{
+    @include inline-block;
+  }
+}
+
+
+
+
+

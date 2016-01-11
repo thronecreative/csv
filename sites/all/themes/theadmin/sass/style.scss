@@ -1,0 +1,1188 @@
+@import "compass";
+@import "_reset";
+@import "_helpers";
+@import "_font-face";
+@import "_icons";
+@import "_base";
+
+
+/* BASIC STYLES
+-------------------------------------------------------------- */
+*{
+  @include box-sizing('border-box');
+}
+
+body{
+  font-family: $font_main;
+  background-color: $page_bg;  
+  color: $color_main;
+  font-size: 18px;
+  font-weight: $font_weight_reg;  
+}
+
+a{
+  @include transition;
+  color: $color_accent;
+  text-decoration: none;
+  
+  &:hover{
+    color: $color_main;
+  }
+}
+
+p{
+  font-size: 18px;
+  line-height: 22px;
+}
+
+ul,
+ul.menu,
+ul.menu li{
+  list-style: none;
+  text-align: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+li a.active,
+li.opened span.nolink{color: $color_main;}
+
+
+.bull{
+  @extend %bull;
+}
+
+.text-btn{
+  @extend %text_btn;
+}
+
+
+/* TYPOGRAPHY STYLES
+-------------------------------------------------------------- */
+body{
+}
+
+h1, h2, h3, h4{
+  font-weight: $font_weight_lt;
+  font-family: $font_header;
+}
+
+h1{
+  font-size: 3em;
+  text-align: center;
+  letter-spacing: 5px;
+  margin-bottom: 40px;
+  p
+
+  span{
+    color: lighten($color_main, 20%);
+  }
+}
+
+h2{
+  font-size: 30px;
+}
+
+
+/* Layout
+-------------------------------------------------------------- */
+html, body, #wrap{
+	height: 100%;
+}
+
+#admin{
+	position: fixed;
+	top: 0;
+	left: 0;
+	left: 300px;
+	margin-left: -300px;
+	width: 300px;
+	overflow-y: auto;
+	min-height: 100%;
+}
+
+
+
+#main{
+	float: left;
+	width: 100%;
+	padding: 40px 40px 40px 340px;
+
+	.inner{
+		margin: auto;
+		min-width: 800px;
+		max-width: 1500px;
+	}
+}
+
+.not-logged-in{
+	#admin{
+		display: none;
+	}
+
+	#main{
+		margin: auto;
+		padding: 0 40px 40px 40px;
+
+		#content{
+			max-width: 700px;
+			margin: auto;
+		}
+
+		#edit-actions, .form-actions{
+			margin-bottom: 40px;
+		}
+	}
+}
+
+
+ 
+
+/* User
+-------------------------------------------------------------- */
+.not-logged-in.page-user,
+.page-node-delete,
+.page-admin-structure-menu-item-delete{
+	text-align: center;
+
+	h1{
+		margin: 100px 0;
+	}
+
+	label{
+		display: none;
+	}
+
+	input[type='text'],
+	input[type='password'],
+	input[type="email"]{
+		text-align: center;
+	}
+
+	input[type="submit"]{
+		margin-top: 30px;
+	}
+
+	.text-btn{
+		margin-top: 40px;
+		display: block;
+		text-transform: none;
+	}
+
+	.form-item + .form-item{
+		margin-top: 0;
+		padding-top: 0;
+		border-top: none;
+	}
+}
+
+
+
+/* FORMS 
+--------------------------------------------------------------
+-------------------------------------------------------------- */
+input[type='text'],
+input[type='password'],
+input[type="email"],
+textarea{
+	@extend %shadow_inset;
+	font-family: $font_main;
+	border: none;
+	padding: 20px;
+	font-size: 18px;
+	color: $color_main;
+	letter-spacing: 2px;
+	width: 100%;
+}
+
+label{
+	@include inline-block;
+	font-size: 20px;
+	margin-bottom: 3px;
+	font-family: $font_header;
+	cursor: pointer;
+	letter-spacing: 0px;
+	font-weight: $font_weight_reg !important;
+}
+
+input[type="submit"],
+.button-yes{
+	@include btn;
+	margin: 0 10px;
+}
+
+#edit-cancel,
+.button-no{
+	@extend %text_btn;
+	display: block;
+	margin-top: 20px;
+	color: $color_error;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+#edit-actions{
+	margin-top: 20px;
+	border-top: $border_dashed_lt;
+	padding-top: 40px;
+	margin-bottom: 100px;
+	text-align: center;
+
+	input[type="submit"],
+	.button-yes{
+		@include btn_big;
+	}
+
+	#edit-submit{
+		@include btn_big($color_go);
+	}
+
+	#edit-delete{
+		@include btn_big($color_error);
+	}
+}
+
+
+
+
+fieldset{
+	background-color: darken($page_bg, 5%);
+	padding: 20px;
+	margin-bottom: 40px;
+	
+	.form-wrapper + .form-wrapper{
+		border-top: $border_dashed_lt;
+		padding-top: 20px;
+		margin-top: 20px;
+	}
+}
+
+.fieldset-legend{
+	background-color: darken($page_bg, 20%);
+	padding: 10px 20px 15px;
+	color: $page_bg;
+	display: block;
+	position: relative;
+	font-size: 28px;
+	font-weight: $font_weight_lt;
+}
+
+.collapsible {
+
+	.fieldset-legend{
+		background: none !important;
+		background-color: $color_accent !important;
+		padding: 10px 20px 15px !important;
+
+		&:before{
+			content: "\f107";
+			font-family: 'theadmin';
+			speak: none;
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			line-height: 1;
+			width: 20px;
+			text-align: center;
+			display: inline-block;
+
+			/* Better Font Rendering =========== */
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale; 
+		}
+	}
+
+	a{
+		color: $page_bg;
+	}
+
+	&.collapsed{
+		.fieldset-legend:before{
+			content: "\f105";
+		}
+	}
+
+	.form-item{
+		padding-bottom: 0;
+	}
+
+}
+
+.fieldset-legend span.summary{
+	margin: 0;
+}
+
+
+
+.form-item, .form-actions{
+	margin-top: 0;
+	margin-bottom: 0;
+
+	.description{
+		margin-top: 10px;
+		font-size: 12px;
+	}
+
+	input.form-checkbox, input.form-radio{
+		position: relative;
+		top: 0;
+	}
+}
+
+.filter-wrapper{
+	display: none;
+}
+
+
+
+.form-required{
+	font-size: 30px;
+	color: $color_error;
+}
+
+
+.tabledrag-changed.warning{
+	color: $color_error;
+}
+
+
+.view-filters{
+
+	.views-submit-button{
+		display: none;
+	}
+
+	.form-item{
+		padding-bottom: 10px;
+	}
+}
+
+.form-holder{	
+	margin: auto;
+
+
+}
+
+.hide-label{
+
+	label{
+		display: none;
+	}
+}
+
+
+
+#edit-field-other-images{
+	margin-top: -40px;
+
+	legend{
+		display: none;
+	}
+
+	fieldset{
+		margin-bottom: 0;
+	}
+}
+
+
+
+.password-suggestions.description{
+	display: none !important;
+}
+
+
+.form-item{
+	padding-bottom: 40px;
+	margin-bottom: 0;
+}
+
+.form-group{
+	margin-bottom: 40px;
+	background-color: darken($page_bg, 2%);
+	border: $border_solid_lt;
+
+	h2{
+		background-color: darken($page_bg, 10%);
+		padding: 20px;
+		color: #fff;
+	}
+
+	.form-item{
+		padding: 0 20px 40px;
+	}
+
+	.body{
+		margin-top: 40px;
+	}
+
+	&.collapsible{
+		h2{
+			color: $color_accent;
+			cursor: pointer;
+		}
+
+		h2.icon:before{
+			@include inline-block;
+			content: "\f107";
+			padding-right: 10px;
+			font-size: .8em;
+			width: 20px;
+			position: relative;
+			top: -4px;
+		}
+	}
+
+	&.collapsed{
+		h2.icon:before{
+			content: "\f105";
+			padding-right: 10px;
+			font-size: .8em;
+		}
+
+		.body{
+			display: none;
+		}
+	}
+}
+
+.insert-images{
+	.image-preview{
+		float: left;
+		z-index: 10;
+
+		img{
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	.image-widget-data{
+		z-index: 1;
+		width: 65%;
+
+		.description{
+			display: none;
+		}
+
+
+		.file,
+		.file-size{
+			font-size: .7em;
+		}
+	}
+
+	.form-type-textfield{
+		margin-top: 10px !important;
+		padding: 10px;
+		background-color: darken($page_bg, 10%);
+		position: relative;
+		z-index: 1;
+
+		label{
+			font-size: .8em;
+		}
+		.form-text{
+			padding: 0;
+			width: 70%;
+		}
+	}
+
+	.form-type-mfw-managed-file{
+		margin-top: 20px;
+
+		.description{
+			display: none;
+		}
+	}
+}
+
+.field-widget-image-image{
+
+	.description{
+		display: none;
+	}
+}
+
+.ui-widget select{
+	font-size: 10px !important;
+}
+
+.form-type-plupload{
+	padding: 20px;
+}
+
+.ui-tabs .ui-tabs-panel{
+	padding: 0;
+
+	.view-filters{
+		float: none;
+		border: none;
+		padding: 20px;
+
+		.form-item{
+			padding-bottom: 0;
+		}
+	}
+}
+.plupload_filelist_footer{
+	height: 30px;
+}
+
+.ui-widget-content{
+	font-family: $font_main;
+	background: $page_bg;
+	
+	#branding{
+		@include pie-clearfix;
+		background-color: darken($page_bg, 10%);
+		padding: 0 !important;
+		position: relative;
+	}
+
+	h1{
+		font-size: 40px;
+		color: #fff;
+		height: auto !important;
+		padding: 20px;
+		margin: 0;
+	}
+}
+
+#file-entity-add-upload-multiple{
+
+	.description{
+		display: none;
+	}
+}
+
+#media-browser-tabset ul.tabs{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a{
+	background-color: $page_bg;
+}
+
+body.page-media-browser{
+	background-color: $page_bg;
+}
+
+.ui-tabs .ui-tabs-nav li{
+		background: none !important;
+		border: none !important;
+		border-color: none !important;
+		border-style: none !important;
+		background-image: none !important;
+		font-weight: normal !important;
+		background-image: none !important;
+		margin: 0;
+
+
+		a{
+			border: none !important;
+			border-color: none !important;
+			border-style: none !important;
+			background-image: none !important;
+			font-weight: normal !important;
+			background-image: none !important;
+			background-color: transparent;
+		}
+	}
+
+.ui-dialog{
+	@include border-radius(0);
+	@include single-box-shadow(0, 0, 0, 10px);
+	padding: 0;
+
+}
+
+.ui-widget-content{
+	background-color: $page_bg;
+}
+
+#media-browser-library-list{
+	padding: 20px;
+	border-top: $border_dashed_lt;
+}
+
+/* Image Gallery Grid 
+--------------------------------------------------------------
+-------------------------------------------------------------- */
+.ADV-Image-Activities{
+	background-color: transparent !important;
+	padding: 0 !important;
+
+	.form-item{
+		padding: 0 0 20px !important;
+	}
+}
+
+#mvw-field_other_images{
+	background-color: transparent;
+	padding: 0;
+}
+
+.Add-Moreimage .Imagedata-Sub{
+	width: 170px;
+	height: 50px;
+}
+
+.Add-Moreimage .form-submit.ajax-processed{
+	right: -150px;
+	top: 3px;
+	padding: 10px 20px;
+}
+
+.ADD-New-Image{
+
+	.form-item{
+		padding: 0 0 20px;
+	}
+}
+
+.Removeall-Button {
+    background-position: 15px center;
+    border-radius: 0 !important;
+    cursor: pointer;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 50px;
+
+    a{
+    	padding: 0 10px;
+    }
+}
+
+.Addtional-Actions{
+
+	.Actions{
+		margin-top: 20px;
+		padding-top: 20px;
+		text-align: center;
+
+		.remove-button{
+			display: none;
+		}
+		
+		.Cancel-Button a{
+			@extend %text_btn;
+			display: block;
+			margin-top: 20px;
+			color: $color_error !important;
+			font-size: 12px;
+			font-weight: 700;
+		}
+
+	}
+
+
+}
+
+
+
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub .form-submit{
+	@include btn_big;
+}
+
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub{
+	@include single-box-shadow(0, 0, 10px, 0, #666);
+	background-color: darken($page_bg, 5%);
+	padding: 20px;
+
+	.description{
+		display: none;
+	}
+
+	input[type="text"], input[type="password"], input[type="email"], textarea{
+		padding: 5px; 
+		width: 50%;
+	}
+
+	.form-item{
+		padding: 10px 0;
+	}
+	.IMAGE-ATTRIBUTES{
+
+	}
+	.IMAGE-PReview{
+		@include pie-clearfix;
+		float: left;
+		margin-right: 20px;
+	}
+
+}
+
+
+
+
+
+/* Tables
+-------------------------------------------------------------- */
+table{
+	width: 100%;
+
+	.menu-enabled input{
+		margin: 0;
+	}
+
+	input.form-checkbox, input.form-radio{
+		position: relative;
+		top: auto !important;
+	}
+}
+
+tr.odd{
+	background-color: darken($page_bg, 1%);
+}
+
+tr.even{
+	background-color: darken($page_bg, 4%);
+}
+
+td{
+	padding: 10px;
+	vertical-align: middle;
+
+	.form-type-checkbox{
+		padding: 0 10px;
+	}
+}
+
+thead{
+	background-color: darken($page_bg, 15%);
+	color: $page_bg;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+
+	th{
+		padding: 10px;
+		font-size: 12px;
+
+		.form-type-checkbox{
+			padding-left: 10px;
+		}
+
+		.form-item{
+			padding-bottom: 0;
+		}
+	}
+}
+
+.draggable a.tabledrag-handle{
+	margin: 0;
+	height: auto;
+}
+a.tabledrag-handle .handle{
+	width: 25px;
+	height: 15px;
+	margin: 3px 10px 0 0;
+	padding: 0;
+	background-position: 6px 0;
+}
+
+div.indentation{
+	width: 30px;
+}
+
+.tabledrag-toggle-weight-wrapper{
+	display: none;
+}
+
+.view-content{
+	clear: both;
+}
+
+/* Admin Actions
+-------------------------------------------------------------- */
+
+.admin-actions{
+
+	h1{
+		font-weight: 100;
+
+		span{
+			color: $color_accent;
+		}
+	}
+
+	.body{
+		@include pie-clearfix;
+		background-color: #e1e1e1;
+		padding: 20px 10px;
+		margin: 10px 0;
+	}
+}
+
+.admin-btn{
+	@extend .inline_block;
+	text-transform: uppercase;
+	padding: 10px 20px;
+	font-size: 12px;
+	letter-spacing: 1px;
+	font-weight: 700;
+	float: left;
+	border-right: #ccc solid 1px;
+	
+	&:hover{
+		
+	}
+
+	&.add{
+		/*color: #57853b;*/
+	}
+
+	&.delete{
+		color: $color_error;
+
+		&:hover{
+			color: lighten($color_error, 20%);
+		}
+	}
+
+	&.right{
+		float: right;
+		border: none;
+	}
+}
+
+#admin{	
+	background-color: darken($color_main, 10%);
+
+	h2{
+		padding: 20px;
+		text-align: center;
+		color: #fff;
+		background-color: darken($color_main, 30%);
+	}
+
+}
+
+#block-menu-menu-common-tasks{
+
+	.content > ul.menu{
+		position: relative;
+		border-bottom: darken($color_main, 5%) solid 1px;
+
+		> li{
+			border-top: darken($color_main, 5%) solid 1px;
+
+			&.active-trail{
+
+				> span, > a{
+					color: $color_accent;
+					background-color: darken($color_main, 25%);
+
+					&:before{
+						background-color: darken($color_main, 30%);
+					}
+
+					
+				}
+
+				ul{
+					display: block;
+				}
+			}
+
+			&.expanded span:after{
+				content: "\f105";
+				font-family: 'theadmin';
+				speak: none;
+				font-style: normal;
+				font-weight: normal;
+				font-variant: normal;
+				text-transform: none;
+				line-height: 1;
+
+				/* Better Font Rendering =========== */
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale; 
+				@include transition;
+				@include inline-block;
+				float: right;
+				width: 40px;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				font-size: 1em;
+				color: darken($color_main, 30%);
+			}
+
+			&.expanded.active-trail span:after{
+				content: "\f107";
+				color:  darken($color_main, 12%);
+			}
+
+			
+
+			> span, > a{
+				@include transition;
+				background-color: darken($color_main, 12%);
+				color: #fff;
+				display: block;
+				line-height: 40px;
+				height: 40px;
+				letter-spacing: 1px;
+				font-size: 1.2em;
+				font-weight: $font_weight_lt; 
+				cursor: pointer;
+				text-transform: capitalize;
+
+				&:hover{
+					color: $color_accent;
+					background-color: darken($color_main, 20%);
+
+					&:before{
+						background-color: darken($color_main, 25%);
+					}
+				}
+			}
+
+			ul{
+				display: none;
+			}
+
+			li{
+				border-top: darken($color_main, 5%) solid 1px;
+				
+
+
+
+				a{
+					padding: 10px 20px;
+					color: $page_bg;
+					letter-spacing: 1px;
+					font-weight: $font_weight_lt;
+					text-transform: lowercase;
+					display: block;
+
+					&.active{
+						color: $color_accent;
+						background-color: darken($color_main, 15%);
+					}
+
+					&:hover{
+						color: $color_accent;
+						background-color: darken($color_main, 20%);
+
+						&.active{
+							color: $color_accent;
+							background-color: darken($color_main, 20%);
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	[class^="icon-"]:before, [class*=" icon-"]:before{
+		@include transition;
+		@include inline-block;
+		float: left;
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+		font-size: 1em;
+		margin-right: 10px;
+		background-color: darken($color_main, 15%);
+
+	}
+
+}
+
+
+/* Media Gallery
+-------------------------------------------------------------- */
+
+.mg-col{
+	margin: 0;
+}
+
+.media-gallery-media .media-gallery-item-wrapper{
+	/*padding: 5px;*/
+	margin: 0 10px 10px 0;
+}
+
+.media-gallery-media .media-gallery-item{
+	@include single-box-shadow;
+	padding: 0;
+	border: none;
+	
+	a{
+		cursor: move;
+	}
+}
+
+.mg-col-4 > .field-items > .field-item, .mg-col-4 .mg-gallery{
+	position: relative;
+	width: 150px !important;
+	height: 150px;
+}
+
+.draggable-wrapper{
+	background-color: $color_accent;
+}
+
+#edit-settings-wrapper,
+#edit-media-gallery-description{
+	display: none;
+}
+
+
+
+div.vertical-tabs{
+	background-color: darken($page_bg, 10%);
+
+	.vertical-tabs-panes{
+		padding-top: 10px;
+	}
+}
+
+.vertical-tabs ul.vertical-tabs-list li.selected{
+	background-color: darken($page_bg, 10%);
+
+	&:hover{
+		outline: none;
+	}
+}
+
+.form-holder{
+	
+}
+
+/*.image-preview{
+	float: left;
+	margin-right: 2%;
+	width: 20%;
+
+	img{
+		width: 100%;
+		height: auto;
+	}
+}*/
+
+.image-details{
+	float: left;
+	width: 78%;
+}
+
+#multiform{
+
+	h2{
+		margin-bottom: 20px;
+		font-size: 18px;
+		display: none;
+	}
+
+	.form-holder{
+		margin-bottom: 40px;
+		padding-bottom: 20px;
+		@include pie-clearfix;
+		border-bottom: $border_dashed_lt;
+	}
+
+	.form-group{
+		padding-top: 20px;
+	}
+
+	.actions{
+		display: none;
+	}
+
+	.form-submit,
+	a{
+		display: block;
+		width: 200px;
+		margin: auto;
+		text-align: center;
+	}
+
+	a{
+		@include single-box-shadow(none);
+		background-color: transparent;
+		color: $color_error;
+		font-size: 12px;
+		font-weight: 700;
+		text-transform: uppercase;
+		margin: 20px auto 100px;
+	}
+}
+
+.form-hidden{
+	display: none !important;
+}
+
+.actions{
+	text-align: center;
+}
+
+
+/* MESSAGES
+-------------------------------------------------------------- */
+div.messages-holder{
+	border: none;
+	max-width: 800px;
+	margin: 0 auto 60px;
+
+	h1{
+		font-size: 1em;
+		letter-spacing: 0;
+		margin-bottom: 0;
+	}
+
+	.messages{
+		padding: 30px;
+		font-family: $font_header;
+		border: none;
+	}
+
+	.error,
+	.status{
+		background-image: none;
+	}
+
+	.error{
+		background-color: $color_error;
+		color: $page_bg;
+	}
+
+	.warning{
+		
+	}
+}
+
+body div.tabledrag-changed-warning{
+	padding: 30px;
+	max-width: 800px;
+	margin: 20px auto;
+	background-image: none;
+	background-color: $color_warning;
+	color: $color_main;
+	border: none;
+}
+
+
+
+.form-item input.error, .form-item textarea.error, .form-item select.error{
+	border: $color_error solid 2px;
+}
+
+
+
+/* EXTRAS
+-------------------------------------------------------------- */
+body.cke_show_borders{ margin: 0 auto;}
+
+div.krumo-root{
+	text-align: left !important;
+	margin-left: 20%;
+}
+
+
+

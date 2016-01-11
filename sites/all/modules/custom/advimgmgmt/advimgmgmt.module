@@ -1,0 +1,836 @@
+<?php
+
+/**
+ * @file
+ * Advanced Image MGMT module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function advimgmgmt_theme() {
+  return array(
+    'advimgmgmt_group' => array(
+      'render element' => 'elements',
+    ),
+	'advimgmgmt' => array(
+      'template' => 'advimgmgmt',
+      'variables' => array('image' => NULL, 'linknext' => NULL),
+    ),
+  );
+}
+
+/**
+ * Impements hook_theme_registry_alter().
+ */
+function advimgmgmt_theme_registry_alter(&$theme_registry) {
+  $theme_registry['field_multiple_value_form']['function'] = 'advimgmgmt_field_multiple_value_form';
+  $theme_registry['file_widget_multiple']['function'] = 'advimgmgmt_file_widget_multiple';
+  
+  //Alter for linknextclass
+  $theme_registry['image_formatter']['theme path'] = drupal_get_path('module', 'advimgmgmt');
+  $theme_registry['image_formatter']['function'] = 'advimgmgmt_image_formatter';  
+}
+
+/**
+ * Implements theme_field_multiple_value_form().
+ * Not altered anything
+ */
+function advimgmgmt_field_multiple_value_form($variables) {
+
+  $element = $variables['element'];
+
+  // Why do we need this?
+  if ($element['#cardinality'] == 1) {
+    return;
+  }
+
+  // Sort items according to '_weight' (needed when the form comes back after
+  // preview or failed validation).
+  $widgets = array();
+
+  foreach (element_children($element) as $key) {
+    if ($key === 'add_more') {
+      $add_more_button = &$element[$key];
+    }
+    else {
+      $widgets[] = &$element[$key];
+    }
+  }
+
+  $first_widget = $widgets[0];
+  // Special case for Entity reference module.
+  // TODO: Find more clear way to read field instance.
+  if (isset($first_widget['target_id'])) {
+    $first_widget = $first_widget['target_id'];
+  }
+  $instance = field_read_instance($first_widget['#entity_type'], $first_widget['#field_name'], $first_widget['#bundle']);
+  if (empty($instance['widget']['settings']['advimgmgmt']) || $instance['widget']['settings']['advimgmgmt'] == 'table') {
+    return theme_field_multiple_value_form($variables);
+  }
+
+  $widget_type = $instance['widget']['settings']['advimgmgmt'];
+
+  usort($widgets, '_field_sort_items_value_helper');
+  $id = 'mvw-' . $element['#field_name'];
+  advimgmgmt_add_asserts($id, $widget_type);
+
+  $groups = array();
+  $output = '<div id="' . $id . '" class="mvw-type-' . $widget_type . '">';
+  foreach ($widgets as $delta => $widget) {
+    $widget['_weight']['#attributes']['class'] = array('mvw-weight-delta-order');
+    $group_id = 'mvw-group-' . $element['#field_name'] . '-' . $delta;
+
+    $title = $element['#title'] . ' (' . ($delta + 1) . ')';
+
+    $element['#delta'] = $delta;
+    drupal_alter('advimgmgmt_element_title', $title, $element);
+
+    if ($widget_type == 'tabs') {
+      $links['mvw-tab-' . $delta] = array(
+        'href' => '',
+        'title' => $title,
+        'html' => TRUE,
+        'fragment' => $group_id ,
+        'external' => TRUE,
+      );
+    }
+
+    $groups[$delta] = array(
+      '#theme' => 'advimgmgmt_group',
+      '#title' => check_plain($title),
+      '#widget_type' => $widget_type,
+      '#attributes' => array(
+        'id' => $group_id,
+        'class' => array('mvw-group', 'delta-' . $delta),
+      ),
+      'widget' => $widget,
+    );
+  }
+
+  if ($widget_type == 'tabs' && isset($links)) {
+    $attributes = array('class' => array('mvw-tabs'));
+    $output .= theme('links', array('links' => $links, 'attributes' => $attributes));
+  }
+
+  $output .= render($groups);
+
+  $output .= '</div>';
+  $output .= '<div class="clearfix">' . drupal_render($add_more_button) . '</div>';
+
+  return $output;
+}
+
+/**
+ * Implements theme_file_widget_multiple().
+ */
+function advimgmgmt_file_widget_multiple($variables) {
+
+  $element = $variables['element'];
+ 
+  // Get our list of widgets in order (needed when the form comes back after
+  // preview or failed validation).
+  $widgets = array();
+  foreach (element_children($element) as $key) {
+    $widgets[] = &$element[$key];	
+  }
+	
+  $instance = field_read_instance($widgets[0]['#entity_type'], $widgets[0]['#field_name'], $widgets[0]['#bundle']);
+  if (empty($instance['widget']['settings']['advimgmgmt']) || $instance['widget']['settings']['advimgmgmt'] == 'table') {
+    return theme_file_widget_multiple($variables);
+  }
+
+  $widget_type = $instance['widget']['settings']['advimgmgmt'];
+
+  usort($widgets, '_field_sort_items_value_helper');
+
+  $id = 'mvw-' . $element['#field_name'];
+
+  advimgmgmt_add_asserts($id, $widget_type);
+  
+  $output ='<div class="ADV-Image-MGMT Advance-Image-Widget" id="'.$id.'-MGMT">
+			<div class="NAVIGATIONS"><a class = "standardImageMgmt"  data="'.$id.'-MGMT">Standard Image MGMT</a> | <a class = "AdvanceImageMgmt"  data="'.$id.'-MGMT">Advance Image MGMT</a></div>
+			<div class="ADV-Image-Activities">
+				<div class="Add-Moreimage"></div> 
+				<div class="Remove-All"><span class="SELECT-ALL">Select everything</span><span class="Removeall-Button"><a>Remove Selected</a></span></div> 
+				<div class="clear-both"></div> 
+				
+				<div class="CONFIRM-Box">
+					<div class="CONFIRM-Box-Inner">
+						<p>Are you sure you want to these items?</p>	
+						<div class="Confirm-Row"><span class="Removeall-ConfirmButton"><a>Yup! Remove them Please</a></span></div>
+						<div class="Confirm-Row"><span class="Changed-Mind">No, I changed my mind..</span></div>
+					</div>
+				</div>
+
+			</div>
+			<div id="' . $id . '" class="mvw-type-' . $widget_type . '">';
+  
+  $gpoups = array();
+  $total_widgets = count($widgets);
+  foreach ($widgets as $delta => &$widget) {
+	
+    // Save the uploading row for last.
+    if ($widget['#file'] == FALSE) {
+      $widget['#title'] = $element['#file_upload_title'];
+      $widget['#description'] = $element['#file_upload_description'];
+      continue;
+    }
+
+	$widget['remove_button']['#attributes']['class'] = array('Remove-Button');
+	
+	//cancel link & link to next image
+	$widget['advimgmgmt_additionalactions'] = array(
+		'#type' => 'markup',
+		'#markup' =>'<div class="Addtional-Actions">
+						<div class="IMAGE-ATTRIBUTES">
+							<div class="IMAGE-PReview">
+								<img src="'.image_style_url('image_gallery_preview', $widget['#file']->uri).'"/>
+							</div>
+              <div class="IMAGE-NAME">
+                '.$widget['#file']->filename.'
+              </div>
+						</div>
+						<div class="LinkTonextimage"></div>
+						<div class="Actions">
+							<span class="save-button">
+								<input class="form-submit save-button" name="actionbutton-'.$widget['fid']['#value'].'" value="Save" type="button">
+							</span> 
+							<span class="remove-button"></span> 
+							<span class="Cancel-Button"><a>Cancel</a></span>
+						</div>
+					</div>',
+	);
+
+	if(isset($widget['#entity']->nid)){
+		$nid = $widget['#entity']->nid;
+	}else{
+		$nid = '0';
+	}
+	//hidden field value
+
+	$widget['advimgmgmt_fileid'] = array(
+		'#type' => 'markup',
+		'#markup' => '<div class="FID-FILE"><input type="hidden" nid="'.$nid.'" value="'.$widget['fid']['#value'].'" class="FID"></div>',
+	);
+
+	
+    if (isset($widget['#file'])) {
+      $title = '<span class="file">' . check_plain($widget['#file']->filename) . '</span>';
+      $title .= ' <span class="file-size">(' . format_size($widget['#file']->filesize) . ')</span>';
+    }
+    else {
+      $title = $element['#title'] . ' (' . ($delta + 1) . ')';
+    }
+
+    $element['#delta'] = $delta;
+
+	$linkclass = null; //add linkclass
+	if(isset($widget['#value']['linknext']['1'])){
+		if($widget['#value']['linknext']['1'] == 1){
+			$linkclass = 'Comibine-Next';
+		}	
+	}
+
+	
+    drupal_alter('advimgmgmt_element_title', $title, $element);
+    $group_id = 'mvw-group-' . $element['#field_name'] . '-' . $delta;
+
+    if ($widget_type == 'tabs') {
+      $links['mvw-tab-' . $delta] = array(
+        'href' => '',
+        'title' => $title,
+        'html' => TRUE,
+        'fragment' => $group_id,
+        'external' => TRUE,
+      );
+    }
+
+    // Render everything else together in a tabs, without the normal wrappers.
+    $widget['#theme_wrappers'] = array();
+    $widget['_weight']['#attributes']['class'] = array('mvw-weight-delta-order');
+	
+	//odd or even classes	
+	$oddorevenclass = $delta % 2 ? 'even' : 'odd';
+
+    $groups[$delta] = array(
+      '#theme' => 'advimgmgmt_group',
+      '#title' => $title,
+      '#widget_type' => $widget_type,
+      '#attributes' => array(
+        'id' => $group_id,
+        'class' => array('mvw-group', 'delta-' . $delta, $linkclass, $oddorevenclass),
+      ),
+      'widget' => $widget,
+    );
+
+    // Do not print widgets twice.
+    hide($widget);
+
+  }
+  if ($widget_type == 'tabs' && isset($links)) {
+    $attributes = array('class' => array('mvw-tabs'));
+    $output .= theme('links', array('links' => $links, 'attributes' => $attributes));
+  }
+
+  $output .= render($groups);
+  $output .= '<div class="Req-Both clear-both"></div></div>';
+  $output .= '<div class="ADD-New-Image">'.drupal_render_children($element).'</div>';
+  $output .= '</div>';
+  return $output;
+
+}
+
+/**
+ * Adds a JavaScript, CSS and settings to the page.
+ */
+function advimgmgmt_add_asserts($id, $widget_type) {
+  $path = drupal_get_path('module', 'advimgmgmt');
+  drupal_add_library('system', 'ui.' . $widget_type);
+  drupal_add_library('system', 'ui.sortable');
+  drupal_add_js($path . '/advimgmgmt.js');
+  drupal_add_js($path . '/source/advimgmultisortable.js');
+  drupal_add_js($path . '/source/advimgmgmtcookie.js');
+  drupal_add_css($path . '/advimgmgmt.css');
+  drupal_add_js(array('mvw' => array($id => $widget_type)), 'setting');
+}
+
+/**
+ * Returns HTML for a single widget group.
+ */
+function theme_advimgmgmt_group($vars) {
+  $elements = $vars['elements'];
+
+  if ($elements['#widget_type'] == 'blocks') {
+    $ui_classes = array(
+      'ui-widget',
+      'ui-widget-content',
+      'ui-helper-clearfix',
+      'ui-corner-all',
+    );
+    $elements['#attributes']['class'] = array_merge($ui_classes, $elements['#attributes']['class']);
+  }
+  $output = '<div' . drupal_attributes($elements['#attributes']) . '>';
+  
+  $output .= '<div class="Image-Activites"><span class="Image-Weight"></span> <span class="Image-Remove"></span><div class="clear-both"></div></div>';
+  $output .= '<div class="mvw-group-content"><span class="NormalImage-Weight"></span>' . drupal_render($elements['widget']) . '</div>';
+  $output .= '<div class="Edit-Imagedetails-Div"><a class="Edit-Imagedetails">edit image details</a></div>';
+  
+  $output .= '</div>';
+  return $output;
+}
+
+/**
+ * Impements hook_from_FORM_ID_alter().
+ */
+function advimgmgmt_form_field_ui_field_edit_form_alter(&$form, &$form_state) {
+
+  $widget = $form['#instance']['widget'];
+  $instance = $form['#instance'];
+  $multiple_values_behaviors = field_behaviors_widget('multiple values', $form['#instance']);
+  $file_field_widgets = variable_get(
+    'advimgmgmt_file_field_widgets',
+    array(
+      'file_generic',
+      'image_image',
+	  'image_miw',
+    )
+  );
+
+  if ($multiple_values_behaviors == FIELD_BEHAVIOR_DEFAULT || in_array($widget['type'], $file_field_widgets)) {
+
+    if (isset($form['#instance']['widget']['settings']['advimgmgmt'])) {
+      $default_value = $form['#instance']['widget']['settings']['advimgmgmt'];
+    }
+    else {
+      $default_value = 'table';
+    }
+
+	
+//Linknext starts Copied from image caption
+	$field = $form['#field'];
+	if (empty($form['iinstance']['settings'])) {
+      $form['iinstance']['settings'] = array();
+		}
+	$form['instance']['settings'] += advimgmgmt_field_instance_settings_form($field, $instance);
+//Linknext Ends Copied from image caption
+	
+	
+    $form['instance']['widget']['settings']['advimgmgmt'] = array(
+      '#type' => 'radios',
+      '#title' => t('Advance Image MGMT settings'),
+      '#options' => array(
+       'table' => t('Table'),
+	   'blocks' => t('Advance Image MGMT'),
+      ),
+      '#required' => TRUE,
+      '#states' => array('invisible' => array(':input[name="field[cardinality]"]' => array('value' => 1))),
+      '#weight' => -1,
+      '#default_value' => $default_value,
+    );
+
+  }
+
+}
+
+/**
+ * hook form alter (image field widget process)
+ */
+function temp_disabled_advimgmgmt_image_field_widget_process($element, &$form_state, $form) {
+  $item = $element['#value'];
+  $item['fid'] = $element['fid']['#value'];  
+  
+	
+  $instance = field_widget_instance($element, $form_state);
+
+  $settings = $instance['settings'];
+  $widget_settings = $instance['widget']['settings'];
+
+  $element['#theme'] = 'image_widget';
+  $element['#attached']['css'][] = drupal_get_path('module', 'image') . '/image.css';
+
+  // Add the image preview.
+  if ($element['#file'] && $widget_settings['preview_image_style']) {
+    $variables = array(
+      'style_name' => $widget_settings['preview_image_style'],
+      'path' => $element['#file']->uri,
+    );
+
+    // Determine image dimensions.
+    if (isset($element['#value']['width']) && isset($element['#value']['height'])) {
+      $variables['width'] = $element['#value']['width'];
+      $variables['height'] = $element['#value']['height'];
+    }
+    else {
+      $info = image_get_info($element['#file']->uri);
+
+      if (is_array($info)) {
+        $variables['width'] = $info['width'];
+        $variables['height'] = $info['height'];
+      }
+      else {
+        $variables['width'] = $variables['height'] = NULL;
+      }
+    }
+
+    $element['preview'] = array(
+      '#type' => 'markup',
+      '#markup' => theme('image_style', $variables),
+    );
+
+    // Store the dimensions in the form so the file doesn't have to be accessed
+    // again. This is important for remote files.
+    $element['width'] = array(
+      '#type' => 'hidden',
+      '#value' => $variables['width'],
+    );
+    $element['height'] = array(
+      '#type' => 'hidden',
+      '#value' => $variables['height'],
+    );
+  }
+
+  // Add the additional alt and title fields.
+  $element['alt'] = array(
+    '#title' => t('Alternate text'),
+    '#type' => 'textfield',
+    '#default_value' => isset($item['alt']) ? $item['alt'] : '',
+    '#description' => t('testing This text will be used by screen readers, search engines, or when the image cannot be loaded.'),
+    
+    // @see http://www.gawds.org/show.php?contentid=28
+    '#maxlength' => 512,
+    '#weight' => -2,
+    '#access' => (bool) $item['fid'] && $settings['alt_field'],
+  );
+  $element['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#default_value' => isset($item['title']) ? $item['title'] : '',
+    '#description' => t('The title is used as a tool tip when the user hovers the mouse over the image.'),
+    '#maxlength' => 1024,
+    '#weight' => -1,
+    '#access' => (bool) $item['fid'] && $settings['title_field'],
+  );
+  
+  // Link to next form 
+  $element['linknext'] = array(
+		'#title' => t('Link to next Image sd.'),
+		'#type' => 'checkboxes',
+		'#options' =>  array(),
+		'#default_value' => isset($item['linknext']['value']) ? $item['linknext']['value'] : 0,
+		'#access' => (bool) $item['fid'],
+	);
+
+  return $element;
+}
+
+/**
+ * adv img widget menu
+ */
+function advimgmgmt_menu() { 
+	$items['advanceimageremove/%'] = array(
+		'page callback' => 'advimgmgmt_imageremove_page',
+		'page arguments' => array(1),
+		'access callback' => TRUE,
+	);
+  return $items;
+}
+
+/**
+ * adv img details form page
+ */
+function advimgmgmt_imageremove_page(){
+	if(isset($_POST['data']) and !empty($_POST['data'])){
+		foreach($_POST['data'] as $fileid){
+			$file = file_load($fileid);
+			if ($file != NULL) {
+				$node = node_load(arg(1));
+				file_delete($file, TRUE);
+				node_save($node);			
+			}
+		}
+		print "Removed Slected Files!!";	
+	}
+	
+}
+
+/**
+ * Given an entity type and bundle name, this will return an associative array
+ * of image field info instances, keyed by image field machine names. Returns
+ * null if no image fields are found.
+ */
+
+function advimgmgmt_get_image_fields($entity_type, $bundle) {
+  $image_fields = array();
+  $fields = field_info_instances($entity_type, $bundle);
+  foreach ($fields as $field_name => $field) {
+    // Skip any deleted and non image widget fields.
+    if ($field['deleted'] == 1) {
+      continue;
+    }
+    if (($field['widget']['type'] == 'image_image') || ($field['widget']['type'] == 'image_miw')) {
+      $image_fields[$field_name] = $field;
+    }
+    
+  }
+
+  return $image_fields;
+}
+
+/**
+ * Configuration form for editing insert settings for a field instance.
+ */
+function advimgmgmt_field_instance_settings_form($field, $instance) {
+	
+	if($field['type'] == 'image'){
+		$default_value = $instance['settings']['linknext'];
+	}else{
+		$default_value = '';
+	}
+	$form['linknext'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Enable Link to Next'),
+		'#default_value' => $default_value,
+		'#description' => t('Adds an Link to next to all the image fields'),
+		'#weight' => 12,
+	);
+	return $form;
+
+}
+
+/**
+ * Field info
+ */
+function advimgmgmt_field_info_alter(&$info) {
+  // Add a setting to all field types.
+  foreach ($info as $field_type => $field_type_info) {
+    if ($field_type == 'image')
+    $info['image']['instance_settings'] += array(
+      'linknext' => 0,
+    );
+  }
+}
+
+/**
+ * Field widget form alter
+ */
+function advimgmgmt_field_widget_form_alter(&$element, &$form_state, $context) {
+  // Add display_field setting to field because file_field_widget_form() assumes it is set.
+  $instance = $context['instance'];
+  $settings = $instance['settings'];
+
+  if (isset($settings['linknext']) && ($instance['widget']['type'] == 'image_image' || $instance['widget']['type'] == 'image_miw' ) && $settings['linknext']) {
+    foreach (element_children($element) as $delta) {
+      // Add all extra functionality provided by the image widget.
+      $element[$delta]['#process'][] = 'advimgmgmt_widget_process';
+    }
+  }
+}
+
+/**
+ * An element #process callback for the image_image field type.
+ * Expands the image_image type to include the alt and title fields.
+ */
+function advimgmgmt_widget_process($element, &$form_state, $form) {
+	//if new image added 
+	$weightdata  = 0;
+	if(isset($element['#file']) && isset($element['#file']->status)){		
+		if($element['#file']->status == 0){
+			$element['_weight']['#default_value'] = --$weightdata ;					
+		}
+	}
+	
+  $item = $element['#value'];
+  
+  // Add the additional alt and title fields.
+  $element['linknext'] = array(
+    //'#title' => serialize($item['linknext']),
+   // '#type' => 'checkbox',
+	'#type' => 'checkboxes',
+	'#options' =>  array( 1 =>   'Link to Next image.' ),
+  //  '#default_value' => array($defaultlinknext, 
+    '#access' => (bool) $item['fid'],
+	'#attributes' => array('class' => array('LinktoNext')),
+  );
+  
+  //drupal_set_message(serialize($item['linknext']), 'error');
+  
+  if(isset($item['linknext']['1']) &&  $item['linknext']['1'])
+	{
+	$element['linknext'][ '#default_value' ] = array(1);
+	
+	}
+	//$element['linknext'][ '#default_value' ] = array(1);
+  $element['alt']['#title'] = 'Alt Text';
+ // $element['alt']['#default_value'] = 'Alt Text';
+  $element['alt']['#description'] = 'Alternative text is used by screen readers, search engines, and when the image cannot be loaded. By adding alt text you improve accessibility and search engine optimization.';
+  
+  $element['title']['#title'] = 'Title Text';
+  $element['title']['#description'] = 'Title text is used in the tool tip when a user hovers their mouse over the image. Adding title text makes it easier to understand the context of an image and improves usability.';
+
+  return $element;
+}
+
+/**
+ * Implements hookd_field_attach_insert().
+ */
+function advimgmgmt_field_attach_insert($entity_type, $entity) {
+  advimgmgmt_field_attach_update($entity_type, $entity);
+}
+
+/**
+ * Implements hookd_field_attach_update().
+ */
+function advimgmgmt_field_attach_update($entity_type, $entity) {
+  list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+
+  if (!isset($vid)) {
+    $vid = $id;
+  }
+
+  $image_fields = advimgmgmt_get_image_fields($entity_type, $bundle);
+
+  foreach ($image_fields as $field_name => $image_field) {
+    if (!$image_field['settings']['linknext']) {
+      continue;
+    }
+    $field = field_info_field($field_name);
+    $table_name = 'field_advimgmgmt';
+    $revision_name = 'field_advimgmgmt_revision';
+
+    $all_languages = field_available_languages($entity_type, $field);
+    $field_languages = array_intersect($all_languages, array_keys((array) $entity->$field_name));
+
+    // Delete and insert, rather than update, in case a value was added.
+    // Delete languages present in the incoming $entity->$field_name.
+    // Delete all languages if $entity->$field_name is empty.
+    $languages = !empty($entity->$field_name) ? $field_languages : $all_languages;
+    if ($languages) {
+      db_delete($table_name)
+        ->condition('field_name', $field_name)
+        ->condition('entity_type', $entity_type)
+        ->condition('entity_id', $id)
+        ->condition('language', $languages, 'IN')
+        ->execute();
+      db_delete($revision_name)
+        ->condition('field_name', $field_name)
+        ->condition('entity_type', $entity_type)
+        ->condition('entity_id', $id)
+        ->condition('revision_id', $vid)
+        ->condition('language', $languages, 'IN')
+        ->execute();
+    }
+
+    // Prepare the multi-insert query.
+    $do_insert = FALSE;
+    $columns = array('field_name', 'entity_type', 'entity_id', 'revision_id', 'bundle', 'delta', 'language', 'caption' );
+    $query = db_insert($table_name)->fields($columns);
+    $revision_query = db_insert($revision_name)->fields($columns);
+
+    foreach ($field_languages as $langcode) {
+
+      $items = (array) $entity->{$field_name}[$langcode];
+      $delta_count = 0;
+      foreach ($items as $delta => $item) {
+		//drupal_set_message(serialize($item), "error");
+        // We now know we have someting to insert.
+        $do_insert = TRUE;
+        $record = array(
+          'field_name' => $field_name,
+          'entity_type' => $entity_type,
+          'entity_id' => $id,
+          'revision_id' => $vid,
+          'bundle' => $bundle,
+          'delta' => $delta,
+          'language' => $langcode,
+          'caption' => isset($item['linknext'][1]) ? $item['linknext'][1] : 0,
+           
+        );
+        $query->values($record);
+        if (isset($vid)) {
+          $revision_query->values($record);
+        }
+
+        if ($field['cardinality'] != FIELD_CARDINALITY_UNLIMITED && ++$delta_count == $field['cardinality']) {
+          break;
+        }
+      }
+    }
+
+    // Execute the query if we have values to insert.
+    if ($do_insert) {
+      $query->execute();
+      $revision_query->execute();
+    }
+  }
+}
+
+/**
+ * Implements hookd_field_attach_load().
+ */
+function advimgmgmt_field_attach_load($entity_type, $entities, $age, $options) {
+  foreach ($entities as $entity) {
+    list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+    if (!isset($vid)) {
+      $vid = $id;
+    }
+
+    $load_current = $age == FIELD_LOAD_CURRENT;
+
+    $table = $load_current ? 'field_advimgmgmt' : 'field_advimgmgmt_revision';
+
+    $query = db_select($table, 't')
+      ->fields('t')
+      ->condition('entity_type', $entity_type)
+      ->condition($load_current ? 'entity_id' : 'revision_id', $load_current ? $id : $vid)
+      ->orderBy('delta');
+
+    $results = $query->execute();
+
+    foreach ($results as $row) {
+      $field = field_info_instance($entity_type, $row->field_name, $bundle);
+      if (!$field['settings']['linknext']) {
+        continue;
+      }
+		//$row->caption = 1; //delete later 
+      $item['linknext']['1'] = $row->caption;
+
+      // Add the item to the field values for the entity.
+      $entities[$row->entity_id]->{$row->field_name}[$row->language][$row->delta]['linknext']['1'] = $row->caption;
+   
+    }
+  }
+}
+
+/**
+ * Implements hook_field_attach_delete().
+ */
+function advimgmgmt_field_attach_delete($entity_type, $entity) {
+  list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+
+  foreach (field_info_instances($entity_type, $bundle) as $instance) {
+    $field = field_info_field_by_id($instance['field_id']);
+    advimgmgmt_field_attach_purge($entity_type, $entity, $field, $instance);
+  }
+}
+
+/**
+ * Implements hook_field_attach_purge().
+ */
+function advimgmgmt_field_attach_purge($entity_type, $entity, $field, $instance) {
+  list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+
+  $table_name = 'field_advimgmgmt';
+  $revision_name = 'field_advimgmgmt_revision';
+  db_delete($table_name)
+    ->condition('entity_type', $entity_type)
+    ->condition('entity_id', $id)
+    ->execute();
+  db_delete($revision_name)
+    ->condition('entity_type', $entity_type)
+    ->condition('entity_id', $id)
+    ->execute();
+}
+
+/**
+ * Implements hook_field_attach_delete_revision().
+ */
+function advimgmgmt_field_attach_delete_revision($entity_type, $entity) {
+  list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+
+  if (isset($vid)) {
+    $revision_name = 'field_advimgmgmt_revision';
+    db_delete($revision_name)
+      ->condition('entity_type', $entity_type)
+      ->condition('entity_id', $id)
+      ->condition('revision_id', $vid)
+      ->execute();
+  }
+}
+
+/**
+ * Implements field_diff_view_alter().
+ */
+function advimgmgmt_field_diff_view_alter(&$values, $items, $context) {
+  $field = $context['field'];
+  $instance = $context['instance'];
+  $settings = $context['settings'];
+
+  // Only handle image fields
+  if ($field['type'] != 'image' || !$instance['settings']['linknext']) {
+    return;
+  }
+
+  foreach ($items as $delta => $item) {
+    if (!is_array($values[$delta])) {
+      $values[$delta] = array($values[$delta]);
+    }
+    // Allow users to optionally clean system specific characters.
+    $values[$delta][] = diff_normalise_text($item['linknext']['value']);
+  }
+}
+
+/**
+ * Override of theme_image_formatter().
+ */
+function advimgmgmt_image_formatter($variables) {
+  $image = theme_image_formatter($variables);
+  // Now that Drupal has rendered the image, if there was a caption let's
+  // render the image and the caption, otherwise just return the already
+  // rendered image.
+  $linknext = "";
+  if (isset($variables['item']['linknext']) && !empty($variables['item']['linknext']['1']))
+	{
+	$linknext = "LinkNext";
+	}
+  if (isset($variables['item']['linknext']) && !empty($variables['item']['linknext']['1'])) {
+   return '<div class = "'.$linknext.'">'.$image.'</div>';
+   return theme('image_field_caption', array(
+      'image' => $image,
+      'linknext' =>  $variables['item']['linknext']['1'],
+    ));
+  }
+  else {
+    return $image;
+  }
+}

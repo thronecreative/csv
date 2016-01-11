@@ -1,0 +1,26 @@
+
+/* These are common helper classes.
+-------------------------------------------------------------- */
+
+*{
+  @include box-sizing(border-box);
+}
+
+.inline_block{
+	display: inline-block;
+	zoom: 1;
+	*display: inline;
+}
+
+.clearfix {
+    zoom:1;
+    &:before, &:after {
+        content: "\0020";
+        display: block;
+        height: 0;
+        overflow: hidden;
+    }
+    &:after {
+        clear: both;
+    }
+}

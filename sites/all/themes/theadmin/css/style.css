@@ -1,0 +1,1723 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+/* line 6, ../sass/_reset.scss */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+/* line 16, ../sass/_reset.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* line 19, ../sass/_reset.scss */
+body {
+  line-height: 1;
+}
+
+/* line 22, ../sass/_reset.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 25, ../sass/_reset.scss */
+blockquote, q {
+  quotes: none;
+}
+
+/* line 29, ../sass/_reset.scss */
+blockquote:before, blockquote:after {
+  content: '';
+  content: none;
+}
+
+/* line 34, ../sass/_reset.scss */
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+/* line 38, ../sass/_reset.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* These are common helper classes.
+-------------------------------------------------------------- */
+/* line 5, ../sass/_helpers.scss */
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 9, ../sass/_helpers.scss */
+.inline_block, .admin-btn {
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+
+/* line 15, ../sass/_helpers.scss */
+.clearfix {
+  zoom: 1;
+}
+/* line 17, ../sass/_helpers.scss */
+.clearfix:before, .clearfix:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+/* line 23, ../sass/_helpers.scss */
+.clearfix:after {
+  clear: both;
+}
+
+@font-face {
+  font-family: 'GaramondPremierProLightDisplay';
+  src: url("../fonts/garamondpremrpro-ltdisp.eot");
+  src: url("../fonts/garamondpremrpro-ltdisp.eot") format("embedded-opentype"), url("../fonts/garamondpremrpro-ltdisp.woff") format("woff"), url("../fonts/garamondpremrpro-ltdisp.ttf") format("truetype"), url("../fonts/garamondpremrpro-ltdisp.svg#GaramondPremierProLightDisplay") format("svg");
+}
+@font-face {
+  font-family: 'GaramondPremierProLightItalicDisplay';
+  src: url("../fonts/garamondpremrpro-ltitdisp.eot");
+  src: url("../fonts/garamondpremrpro-ltitdisp.eot") format("embedded-opentype"), url("../fonts/garamondpremrpro-ltitdisp.woff") format("woff"), url("../fonts/garamondpremrpro-ltitdisp.ttf") format("truetype"), url("../fonts/garamondpremrpro-ltitdisp.svg#GaramondPremierProLightItalicDisplay") format("svg");
+}
+@font-face {
+  font-family: 'theadmin';
+  src: url("../fonts/theadmin.eot?me9le6");
+  src: url("../fonts/theadmin.eot?#iefixme9le6") format("embedded-opentype"), url("../fonts/theadmin.woff?me9le6") format("woff"), url("../fonts/theadmin.ttf?me9le6") format("truetype"), url("../fonts/theadmin.svg?me9le6#theadmin") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+/* line 12, ../sass/_icons.scss */
+[class^="icon-"]:before, [class*=" icon-"]:before, .icon:before, .icon-after:after {
+  font-family: 'theadmin';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* line 26, ../sass/_icons.scss */
+.icon-angle-left:before {
+  content: "\f104";
+}
+
+/* line 29, ../sass/_icons.scss */
+.icon-angle-right:before {
+  content: "\f105";
+}
+
+/* line 32, ../sass/_icons.scss */
+.icon-angle-up:before {
+  content: "\f106";
+}
+
+/* line 35, ../sass/_icons.scss */
+.icon-angle-down:before {
+  content: "\f107";
+}
+
+/* line 38, ../sass/_icons.scss */
+.icon-eye:before {
+  content: "\e000";
+}
+
+/* line 41, ../sass/_icons.scss */
+.icon-paper-clip:before {
+  content: "\e001";
+}
+
+/* line 44, ../sass/_icons.scss */
+.icon-mail:before {
+  content: "\e002";
+}
+
+/* line 47, ../sass/_icons.scss */
+.icon-link:before {
+  content: "\e005";
+}
+
+/* line 50, ../sass/_icons.scss */
+.icon-bell:before {
+  content: "\e006";
+}
+
+/* line 53, ../sass/_icons.scss */
+.icon-image:before {
+  content: "\e010";
+}
+
+/* line 56, ../sass/_icons.scss */
+.icon-clock:before {
+  content: "\e014";
+}
+
+/* line 59, ../sass/_icons.scss */
+.icon-camera:before {
+  content: "\e017";
+}
+
+/* line 62, ../sass/_icons.scss */
+.icon-video:before {
+  content: "\e018";
+}
+
+/* line 65, ../sass/_icons.scss */
+.icon-monitor:before {
+  content: "\e021";
+}
+
+/* line 68, ../sass/_icons.scss */
+.icon-cog:before {
+  content: "\e023";
+}
+
+/* line 71, ../sass/_icons.scss */
+.icon-heart:before {
+  content: "\e024";
+}
+
+/* line 74, ../sass/_icons.scss */
+.icon-layers:before {
+  content: "\e031";
+}
+
+/* line 77, ../sass/_icons.scss */
+.icon-paper:before {
+  content: "\e034";
+}
+
+/* line 80, ../sass/_icons.scss */
+.icon-search:before {
+  content: "\e036";
+}
+
+/* line 83, ../sass/_icons.scss */
+.icon-reply:before {
+  content: "\e039";
+}
+
+/* line 86, ../sass/_icons.scss */
+.icon-circle-plus:before {
+  content: "\e040";
+}
+
+/* line 89, ../sass/_icons.scss */
+.icon-circle-minus:before {
+  content: "\e041";
+}
+
+/* line 92, ../sass/_icons.scss */
+.icon-circle-check:before {
+  content: "\e042";
+}
+
+/* line 95, ../sass/_icons.scss */
+.icon-circle-cross:before {
+  content: "\e043";
+}
+
+/* line 98, ../sass/_icons.scss */
+.icon-microphone:before {
+  content: "\e048";
+}
+
+/* line 101, ../sass/_icons.scss */
+.icon-repeat:before {
+  content: "\e058";
+}
+
+/* line 104, ../sass/_icons.scss */
+.icon-head:before {
+  content: "\e074";
+}
+
+/* line 107, ../sass/_icons.scss */
+.icon-speech-bubble:before {
+  content: "\e076";
+}
+
+/* line 110, ../sass/_icons.scss */
+.icon-power:before {
+  content: "\e086";
+}
+
+/* line 113, ../sass/_icons.scss */
+.icon-arrow-left:before {
+  content: "\e094";
+}
+
+/* line 116, ../sass/_icons.scss */
+.icon-arrow-right:before {
+  content: "\e095";
+}
+
+/* line 119, ../sass/_icons.scss */
+.icon-arrow-up:before {
+  content: "\e096";
+}
+
+/* line 122, ../sass/_icons.scss */
+.icon-arrow-down:before {
+  content: "\e097";
+}
+
+/* line 125, ../sass/_icons.scss */
+.icon-ban:before {
+  content: "\e107";
+}
+
+/* line 128, ../sass/_icons.scss */
+.icon-plus:before {
+  content: "\e114";
+}
+
+/* line 131, ../sass/_icons.scss */
+.icon-minus:before {
+  content: "\e115";
+}
+
+/* line 134, ../sass/_icons.scss */
+.icon-check:before {
+  content: "\e116";
+}
+
+/* line 137, ../sass/_icons.scss */
+.icon-cross:before {
+  content: "\e117";
+}
+
+/* line 140, ../sass/_icons.scss */
+.icon-move:before {
+  content: "\e118";
+}
+
+/* line 143, ../sass/_icons.scss */
+.icon-menu:before {
+  content: "\e120";
+}
+
+/* line 146, ../sass/_icons.scss */
+.icon-file:before {
+  content: "\e124";
+}
+
+/* line 149, ../sass/_icons.scss */
+.icon-ellipsis:before {
+  content: "\e129";
+}
+
+/* VARS 
+-------------------------------------------------------------- */
+/*  COLORS  */
+/*  TYPOGROPHY */
+/*  TRANSITIONS  */
+/* MIX-INS 
+-------------------------------------------------------------- */
+/* PLACEHOLDERS
+-------------------------------------------------------------- */
+/* line 88, ../sass/_base.scss */
+.text-btn, #edit-cancel,
+.button-no, .Addtional-Actions .Actions .Cancel-Button a {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+}
+
+/* line 120, ../sass/_base.scss */
+.bull {
+  color: #69a9c4;
+  margin: 0 10px;
+}
+
+/* line 125, ../sass/_base.scss */
+input[type='text'],
+input[type='password'],
+input[type="email"],
+textarea {
+  -moz-box-shadow: inset 1px 1px 1px 0 #ccc;
+  -webkit-box-shadow: inset 1px 1px 1px 0 #ccc;
+  box-shadow: inset 1px 1px 1px 0 #ccc;
+}
+
+/* BASIC STYLES
+-------------------------------------------------------------- */
+/* line 11, ../sass/style.scss */
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 15, ../sass/style.scss */
+body {
+  font-family: "Raleway", sans-serif;
+  background-color: #f1f1f1;
+  color: #888;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* line 23, ../sass/style.scss */
+a {
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  color: #69a9c4;
+  text-decoration: none;
+}
+/* line 28, ../sass/style.scss */
+a:hover {
+  color: #888;
+}
+
+/* line 33, ../sass/style.scss */
+p {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+/* line 38, ../sass/style.scss */
+ul,
+ul.menu,
+ul.menu li {
+  list-style: none;
+  text-align: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 47, ../sass/style.scss */
+li a.active,
+li.opened span.nolink {
+  color: #888;
+}
+
+/* TYPOGRAPHY STYLES
+-------------------------------------------------------------- */
+/* line 65, ../sass/style.scss */
+h1, h2, h3, h4 {
+  font-weight: 100;
+  font-family: "Raleway", sans-serif;
+}
+
+/* line 70, ../sass/style.scss */
+h1 {
+  font-size: 3em;
+  text-align: center;
+  letter-spacing: 5px;
+  margin-bottom: 40px;
+}
+/* line 75, ../sass/style.scss */
+h1 p
+span {
+  color: #bbbbbb;
+}
+
+/* line 82, ../sass/style.scss */
+h2 {
+  font-size: 30px;
+}
+
+/* Layout
+-------------------------------------------------------------- */
+/* line 89, ../sass/style.scss */
+html, body, #wrap {
+  height: 100%;
+}
+
+/* line 93, ../sass/style.scss */
+#admin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  left: 300px;
+  margin-left: -300px;
+  width: 300px;
+  overflow-y: auto;
+  min-height: 100%;
+}
+
+/* line 106, ../sass/style.scss */
+#main {
+  float: left;
+  width: 100%;
+  padding: 40px 40px 40px 340px;
+}
+/* line 111, ../sass/style.scss */
+#main .inner {
+  margin: auto;
+  min-width: 800px;
+  max-width: 1500px;
+}
+
+/* line 119, ../sass/style.scss */
+.not-logged-in #admin {
+  display: none;
+}
+/* line 123, ../sass/style.scss */
+.not-logged-in #main {
+  margin: auto;
+  padding: 0 40px 40px 40px;
+}
+/* line 127, ../sass/style.scss */
+.not-logged-in #main #content {
+  max-width: 700px;
+  margin: auto;
+}
+/* line 132, ../sass/style.scss */
+.not-logged-in #main #edit-actions, .not-logged-in #main .form-actions {
+  margin-bottom: 40px;
+}
+
+/* User
+-------------------------------------------------------------- */
+/* line 143, ../sass/style.scss */
+.not-logged-in.page-user,
+.page-node-delete,
+.page-admin-structure-menu-item-delete {
+  text-align: center;
+}
+/* line 148, ../sass/style.scss */
+.not-logged-in.page-user h1,
+.page-node-delete h1,
+.page-admin-structure-menu-item-delete h1 {
+  margin: 100px 0;
+}
+/* line 152, ../sass/style.scss */
+.not-logged-in.page-user label,
+.page-node-delete label,
+.page-admin-structure-menu-item-delete label {
+  display: none;
+}
+/* line 156, ../sass/style.scss */
+.not-logged-in.page-user input[type='text'],
+.not-logged-in.page-user input[type='password'],
+.not-logged-in.page-user input[type="email"],
+.page-node-delete input[type='text'],
+.page-node-delete input[type='password'],
+.page-node-delete input[type="email"],
+.page-admin-structure-menu-item-delete input[type='text'],
+.page-admin-structure-menu-item-delete input[type='password'],
+.page-admin-structure-menu-item-delete input[type="email"] {
+  text-align: center;
+}
+/* line 162, ../sass/style.scss */
+.not-logged-in.page-user input[type="submit"],
+.page-node-delete input[type="submit"],
+.page-admin-structure-menu-item-delete input[type="submit"] {
+  margin-top: 30px;
+}
+/* line 166, ../sass/style.scss */
+.not-logged-in.page-user .text-btn,
+.page-node-delete .text-btn,
+.page-admin-structure-menu-item-delete .text-btn {
+  margin-top: 40px;
+  display: block;
+  text-transform: none;
+}
+/* line 172, ../sass/style.scss */
+.not-logged-in.page-user .form-item + .form-item,
+.page-node-delete .form-item + .form-item,
+.page-admin-structure-menu-item-delete .form-item + .form-item {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+/* FORMS 
+--------------------------------------------------------------
+-------------------------------------------------------------- */
+/* line 184, ../sass/style.scss */
+input[type='text'],
+input[type='password'],
+input[type="email"],
+textarea {
+  font-family: "Raleway", sans-serif;
+  border: none;
+  padding: 20px;
+  font-size: 18px;
+  color: #888;
+  letter-spacing: 2px;
+  width: 100%;
+}
+
+/* line 198, ../sass/style.scss */
+label {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  font-size: 20px;
+  margin-bottom: 3px;
+  font-family: "Raleway", sans-serif;
+  cursor: pointer;
+  letter-spacing: 0px;
+  font-weight: 400 !important;
+}
+
+/* line 208, ../sass/style.scss */
+input[type="submit"],
+.button-yes {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -moz-box-shadow: 1px 1px 2px 0 #999;
+  -webkit-box-shadow: 1px 1px 2px 0 #999;
+  box-shadow: 1px 1px 2px 0 #999;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #69a9c4;
+  font-family: "Raleway", sans-serif;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 200;
+  border: none;
+  margin: 0 10px;
+}
+/* line 74, ../sass/_base.scss */
+input[type="submit"]:hover,
+.button-yes:hover {
+  background-color: #4793b3;
+}
+
+/* line 214, ../sass/style.scss */
+#edit-cancel,
+.button-no {
+  display: block;
+  margin-top: 20px;
+  color: #b54747;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* line 224, ../sass/style.scss */
+#edit-actions {
+  margin-top: 20px;
+  border-top: #c8c8c8 dashed 1px;
+  padding-top: 40px;
+  margin-bottom: 100px;
+  text-align: center;
+}
+/* line 231, ../sass/style.scss */
+#edit-actions input[type="submit"],
+#edit-actions .button-yes {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -moz-box-shadow: 1px 1px 2px 0 #999;
+  -webkit-box-shadow: 1px 1px 2px 0 #999;
+  box-shadow: 1px 1px 2px 0 #999;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #69a9c4;
+  font-family: "Raleway", sans-serif;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 200;
+  border: none;
+  font-size: 18px;
+  padding: 20px 40px;
+}
+/* line 74, ../sass/_base.scss */
+#edit-actions input[type="submit"]:hover,
+#edit-actions .button-yes:hover {
+  background-color: #4793b3;
+}
+/* line 236, ../sass/style.scss */
+#edit-actions #edit-submit {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -moz-box-shadow: 1px 1px 2px 0 #999;
+  -webkit-box-shadow: 1px 1px 2px 0 #999;
+  box-shadow: 1px 1px 2px 0 #999;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #8ea963;
+  font-family: "Raleway", sans-serif;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 200;
+  border: none;
+  font-size: 18px;
+  padding: 20px 40px;
+}
+/* line 74, ../sass/_base.scss */
+#edit-actions #edit-submit:hover {
+  background-color: #748c4d;
+}
+/* line 240, ../sass/style.scss */
+#edit-actions #edit-delete {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -moz-box-shadow: 1px 1px 2px 0 #999;
+  -webkit-box-shadow: 1px 1px 2px 0 #999;
+  box-shadow: 1px 1px 2px 0 #999;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #b54747;
+  font-family: "Raleway", sans-serif;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 200;
+  border: none;
+  font-size: 18px;
+  padding: 20px 40px;
+}
+/* line 74, ../sass/_base.scss */
+#edit-actions #edit-delete:hover {
+  background-color: #903939;
+}
+
+/* line 248, ../sass/style.scss */
+fieldset {
+  background-color: #e4e4e4;
+  padding: 20px;
+  margin-bottom: 40px;
+}
+/* line 253, ../sass/style.scss */
+fieldset .form-wrapper + .form-wrapper {
+  border-top: #c8c8c8 dashed 1px;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+/* line 260, ../sass/style.scss */
+.fieldset-legend {
+  background-color: #bebebe;
+  padding: 10px 20px 15px;
+  color: #f1f1f1;
+  display: block;
+  position: relative;
+  font-size: 28px;
+  font-weight: 100;
+}
+
+/* line 272, ../sass/style.scss */
+.collapsible .fieldset-legend {
+  background: none !important;
+  background-color: #69a9c4 !important;
+  padding: 10px 20px 15px !important;
+}
+/* line 277, ../sass/style.scss */
+.collapsible .fieldset-legend:before {
+  content: "\f107";
+  font-family: 'theadmin';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  width: 20px;
+  text-align: center;
+  display: inline-block;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* line 296, ../sass/style.scss */
+.collapsible a {
+  color: #f1f1f1;
+}
+/* line 301, ../sass/style.scss */
+.collapsible.collapsed .fieldset-legend:before {
+  content: "\f105";
+}
+/* line 306, ../sass/style.scss */
+.collapsible .form-item {
+  padding-bottom: 0;
+}
+
+/* line 312, ../sass/style.scss */
+.fieldset-legend span.summary {
+  margin: 0;
+}
+
+/* line 318, ../sass/style.scss */
+.form-item, .form-actions {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/* line 322, ../sass/style.scss */
+.form-item .description, .form-actions .description {
+  margin-top: 10px;
+  font-size: 12px;
+}
+/* line 327, ../sass/style.scss */
+.form-item input.form-checkbox, .form-item input.form-radio, .form-actions input.form-checkbox, .form-actions input.form-radio {
+  position: relative;
+  top: 0;
+}
+
+/* line 333, ../sass/style.scss */
+.filter-wrapper {
+  display: none;
+}
+
+/* line 339, ../sass/style.scss */
+.form-required {
+  font-size: 30px;
+  color: #b54747;
+}
+
+/* line 345, ../sass/style.scss */
+.tabledrag-changed.warning {
+  color: #b54747;
+}
+
+/* line 352, ../sass/style.scss */
+.view-filters .views-submit-button {
+  display: none;
+}
+/* line 356, ../sass/style.scss */
+.view-filters .form-item {
+  padding-bottom: 10px;
+}
+
+/* line 361, ../sass/style.scss */
+.form-holder {
+  margin: auto;
+}
+
+/* line 369, ../sass/style.scss */
+.hide-label label {
+  display: none;
+}
+
+/* line 376, ../sass/style.scss */
+#edit-field-other-images {
+  margin-top: -40px;
+}
+/* line 379, ../sass/style.scss */
+#edit-field-other-images legend {
+  display: none;
+}
+/* line 383, ../sass/style.scss */
+#edit-field-other-images fieldset {
+  margin-bottom: 0;
+}
+
+/* line 390, ../sass/style.scss */
+.password-suggestions.description {
+  display: none !important;
+}
+
+/* line 395, ../sass/style.scss */
+.form-item {
+  padding-bottom: 40px;
+  margin-bottom: 0;
+}
+
+/* line 400, ../sass/style.scss */
+.form-group {
+  margin-bottom: 40px;
+  background-color: #ececec;
+  border: #c8c8c8 solid 1px;
+}
+/* line 405, ../sass/style.scss */
+.form-group h2 {
+  background-color: #d7d7d7;
+  padding: 20px;
+  color: #fff;
+}
+/* line 411, ../sass/style.scss */
+.form-group .form-item {
+  padding: 0 20px 40px;
+}
+/* line 415, ../sass/style.scss */
+.form-group .body {
+  margin-top: 40px;
+}
+/* line 420, ../sass/style.scss */
+.form-group.collapsible h2 {
+  color: #69a9c4;
+  cursor: pointer;
+}
+/* line 425, ../sass/style.scss */
+.form-group.collapsible h2.icon:before {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  content: "\f107";
+  padding-right: 10px;
+  font-size: .8em;
+  width: 20px;
+  position: relative;
+  top: -4px;
+}
+/* line 437, ../sass/style.scss */
+.form-group.collapsed h2.icon:before {
+  content: "\f105";
+  padding-right: 10px;
+  font-size: .8em;
+}
+/* line 443, ../sass/style.scss */
+.form-group.collapsed .body {
+  display: none;
+}
+
+/* line 450, ../sass/style.scss */
+.insert-images .image-preview {
+  float: left;
+  z-index: 10;
+}
+/* line 454, ../sass/style.scss */
+.insert-images .image-preview img {
+  width: 100%;
+  height: auto;
+}
+/* line 460, ../sass/style.scss */
+.insert-images .image-widget-data {
+  z-index: 1;
+  width: 65%;
+}
+/* line 464, ../sass/style.scss */
+.insert-images .image-widget-data .description {
+  display: none;
+}
+/* line 469, ../sass/style.scss */
+.insert-images .image-widget-data .file,
+.insert-images .image-widget-data .file-size {
+  font-size: .7em;
+}
+/* line 475, ../sass/style.scss */
+.insert-images .form-type-textfield {
+  margin-top: 10px !important;
+  padding: 10px;
+  background-color: #d7d7d7;
+  position: relative;
+  z-index: 1;
+}
+/* line 482, ../sass/style.scss */
+.insert-images .form-type-textfield label {
+  font-size: .8em;
+}
+/* line 485, ../sass/style.scss */
+.insert-images .form-type-textfield .form-text {
+  padding: 0;
+  width: 70%;
+}
+/* line 491, ../sass/style.scss */
+.insert-images .form-type-mfw-managed-file {
+  margin-top: 20px;
+}
+/* line 494, ../sass/style.scss */
+.insert-images .form-type-mfw-managed-file .description {
+  display: none;
+}
+
+/* line 502, ../sass/style.scss */
+.field-widget-image-image .description {
+  display: none;
+}
+
+/* line 507, ../sass/style.scss */
+.ui-widget select {
+  font-size: 10px !important;
+}
+
+/* line 511, ../sass/style.scss */
+.form-type-plupload {
+  padding: 20px;
+}
+
+/* line 515, ../sass/style.scss */
+.ui-tabs .ui-tabs-panel {
+  padding: 0;
+}
+/* line 518, ../sass/style.scss */
+.ui-tabs .ui-tabs-panel .view-filters {
+  float: none;
+  border: none;
+  padding: 20px;
+}
+/* line 523, ../sass/style.scss */
+.ui-tabs .ui-tabs-panel .view-filters .form-item {
+  padding-bottom: 0;
+}
+
+/* line 528, ../sass/style.scss */
+.plupload_filelist_footer {
+  height: 30px;
+}
+
+/* line 532, ../sass/style.scss */
+.ui-widget-content {
+  font-family: "Raleway", sans-serif;
+  background: #f1f1f1;
+}
+/* line 536, ../sass/style.scss */
+.ui-widget-content #branding {
+  *zoom: 1;
+  background-color: #d7d7d7;
+  padding: 0 !important;
+  position: relative;
+}
+/* line 38, ../../../../../../../.rvm/gems/ruby-2.1.2/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.ui-widget-content #branding:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 543, ../sass/style.scss */
+.ui-widget-content h1 {
+  font-size: 40px;
+  color: #fff;
+  height: auto !important;
+  padding: 20px;
+  margin: 0;
+}
+
+/* line 554, ../sass/style.scss */
+#file-entity-add-upload-multiple .description {
+  display: none;
+}
+
+/* line 559, ../sass/style.scss */
+#media-browser-tabset ul.tabs {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/* line 565, ../sass/style.scss */
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {
+  background-color: #f1f1f1;
+}
+
+/* line 569, ../sass/style.scss */
+body.page-media-browser {
+  background-color: #f1f1f1;
+}
+
+/* line 573, ../sass/style.scss */
+.ui-tabs .ui-tabs-nav li {
+  background: none !important;
+  border: none !important;
+  border-color: none !important;
+  border-style: none !important;
+  background-image: none !important;
+  font-weight: normal !important;
+  background-image: none !important;
+  margin: 0;
+}
+/* line 584, ../sass/style.scss */
+.ui-tabs .ui-tabs-nav li a {
+  border: none !important;
+  border-color: none !important;
+  border-style: none !important;
+  background-image: none !important;
+  font-weight: normal !important;
+  background-image: none !important;
+  background-color: transparent;
+}
+
+/* line 595, ../sass/style.scss */
+.ui-dialog {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -moz-box-shadow: 0 0 0 10px #aaa;
+  -webkit-box-shadow: 0 0 0 10px #aaa;
+  box-shadow: 0 0 0 10px #aaa;
+  padding: 0;
+}
+
+/* line 602, ../sass/style.scss */
+.ui-widget-content {
+  background-color: #f1f1f1;
+}
+
+/* line 606, ../sass/style.scss */
+#media-browser-library-list {
+  padding: 20px;
+  border-top: #c8c8c8 dashed 1px;
+}
+
+/* Image Gallery Grid 
+--------------------------------------------------------------
+-------------------------------------------------------------- */
+/* line 614, ../sass/style.scss */
+.ADV-Image-Activities {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+/* line 618, ../sass/style.scss */
+.ADV-Image-Activities .form-item {
+  padding: 0 0 20px !important;
+}
+
+/* line 623, ../sass/style.scss */
+#mvw-field_other_images {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* line 628, ../sass/style.scss */
+.Add-Moreimage .Imagedata-Sub {
+  width: 170px;
+  height: 50px;
+}
+
+/* line 633, ../sass/style.scss */
+.Add-Moreimage .form-submit.ajax-processed {
+  right: -150px;
+  top: 3px;
+  padding: 10px 20px;
+}
+
+/* line 641, ../sass/style.scss */
+.ADD-New-Image .form-item {
+  padding: 0 0 20px;
+}
+
+/* line 646, ../sass/style.scss */
+.Removeall-Button {
+  background-position: 15px center;
+  border-radius: 0 !important;
+  cursor: pointer;
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 50px;
+}
+/* line 655, ../sass/style.scss */
+.Removeall-Button a {
+  padding: 0 10px;
+}
+
+/* line 662, ../sass/style.scss */
+.Addtional-Actions .Actions {
+  margin-top: 20px;
+  padding-top: 20px;
+  text-align: center;
+}
+/* line 667, ../sass/style.scss */
+.Addtional-Actions .Actions .remove-button {
+  display: none;
+}
+/* line 671, ../sass/style.scss */
+.Addtional-Actions .Actions .Cancel-Button a {
+  display: block;
+  margin-top: 20px;
+  color: #b54747 !important;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* line 687, ../sass/style.scss */
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub .form-submit {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -moz-box-shadow: 1px 1px 2px 0 #999;
+  -webkit-box-shadow: 1px 1px 2px 0 #999;
+  box-shadow: 1px 1px 2px 0 #999;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #69a9c4;
+  font-family: "Raleway", sans-serif;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 200;
+  border: none;
+  font-size: 18px;
+  padding: 20px 40px;
+}
+/* line 74, ../sass/_base.scss */
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub .form-submit:hover {
+  background-color: #4793b3;
+}
+
+/* line 691, ../sass/style.scss */
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub {
+  -moz-box-shadow: 0 0 10px 0 #666;
+  -webkit-box-shadow: 0 0 10px 0 #666;
+  box-shadow: 0 0 10px 0 #666;
+  background-color: #e4e4e4;
+  padding: 20px;
+}
+/* line 696, ../sass/style.scss */
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub .description {
+  display: none;
+}
+/* line 700, ../sass/style.scss */
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub input[type="text"], .Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub input[type="password"], .Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub input[type="email"], .Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub textarea {
+  padding: 5px;
+  width: 50%;
+}
+/* line 705, ../sass/style.scss */
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub .form-item {
+  padding: 10px 0;
+}
+/* line 711, ../sass/style.scss */
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub .IMAGE-PReview {
+  *zoom: 1;
+  float: left;
+  margin-right: 20px;
+}
+/* line 38, ../../../../../../../.rvm/gems/ruby-2.1.2/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.Advance-Image-Widget .mvw-type-blocks .Imagedata-Sub .IMAGE-PReview:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Tables
+-------------------------------------------------------------- */
+/* line 725, ../sass/style.scss */
+table {
+  width: 100%;
+}
+/* line 728, ../sass/style.scss */
+table .menu-enabled input {
+  margin: 0;
+}
+/* line 732, ../sass/style.scss */
+table input.form-checkbox, table input.form-radio {
+  position: relative;
+  top: auto !important;
+}
+
+/* line 738, ../sass/style.scss */
+tr.odd {
+  background-color: #eeeeee;
+}
+
+/* line 742, ../sass/style.scss */
+tr.even {
+  background-color: #e7e7e7;
+}
+
+/* line 746, ../sass/style.scss */
+td {
+  padding: 10px;
+  vertical-align: middle;
+}
+/* line 750, ../sass/style.scss */
+td .form-type-checkbox {
+  padding: 0 10px;
+}
+
+/* line 755, ../sass/style.scss */
+thead {
+  background-color: #cbcbcb;
+  color: #f1f1f1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+/* line 761, ../sass/style.scss */
+thead th {
+  padding: 10px;
+  font-size: 12px;
+}
+/* line 765, ../sass/style.scss */
+thead th .form-type-checkbox {
+  padding-left: 10px;
+}
+/* line 769, ../sass/style.scss */
+thead th .form-item {
+  padding-bottom: 0;
+}
+
+/* line 775, ../sass/style.scss */
+.draggable a.tabledrag-handle {
+  margin: 0;
+  height: auto;
+}
+
+/* line 779, ../sass/style.scss */
+a.tabledrag-handle .handle {
+  width: 25px;
+  height: 15px;
+  margin: 3px 10px 0 0;
+  padding: 0;
+  background-position: 6px 0;
+}
+
+/* line 787, ../sass/style.scss */
+div.indentation {
+  width: 30px;
+}
+
+/* line 791, ../sass/style.scss */
+.tabledrag-toggle-weight-wrapper {
+  display: none;
+}
+
+/* line 795, ../sass/style.scss */
+.view-content {
+  clear: both;
+}
+
+/* Admin Actions
+-------------------------------------------------------------- */
+/* line 804, ../sass/style.scss */
+.admin-actions h1 {
+  font-weight: 100;
+}
+/* line 807, ../sass/style.scss */
+.admin-actions h1 span {
+  color: #69a9c4;
+}
+/* line 812, ../sass/style.scss */
+.admin-actions .body {
+  *zoom: 1;
+  background-color: #e1e1e1;
+  padding: 20px 10px;
+  margin: 10px 0;
+}
+/* line 38, ../../../../../../../.rvm/gems/ruby-2.1.2/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+.admin-actions .body:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* line 820, ../sass/style.scss */
+.admin-btn {
+  text-transform: uppercase;
+  padding: 10px 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  float: left;
+  border-right: #ccc solid 1px;
+}
+/* line 834, ../sass/style.scss */
+.admin-btn.add {
+  /*color: #57853b;*/
+}
+/* line 838, ../sass/style.scss */
+.admin-btn.delete {
+  color: #b54747;
+}
+/* line 841, ../sass/style.scss */
+.admin-btn.delete:hover {
+  color: #d38f8f;
+}
+/* line 846, ../sass/style.scss */
+.admin-btn.right {
+  float: right;
+  border: none;
+}
+
+/* line 852, ../sass/style.scss */
+#admin {
+  background-color: #6f6f6f;
+}
+/* line 855, ../sass/style.scss */
+#admin h2 {
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  background-color: #3c3c3c;
+}
+
+/* line 866, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu {
+  position: relative;
+  border-bottom: #7b7b7b solid 1px;
+}
+/* line 870, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li {
+  border-top: #7b7b7b solid 1px;
+}
+/* line 875, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li.active-trail > span, #block-menu-menu-common-tasks .content > ul.menu > li.active-trail > a {
+  color: #69a9c4;
+  background-color: #484848;
+}
+/* line 879, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li.active-trail > span:before, #block-menu-menu-common-tasks .content > ul.menu > li.active-trail > a:before {
+  background-color: #3c3c3c;
+}
+/* line 886, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li.active-trail ul {
+  display: block;
+}
+/* line 891, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li.expanded span:after {
+  content: "\f105";
+  font-family: 'theadmin';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  float: right;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 1em;
+  color: #3c3c3c;
+}
+/* line 915, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li.expanded.active-trail span:after {
+  content: "\f107";
+  color: dimgray;
+}
+/* line 922, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li > span, #block-menu-menu-common-tasks .content > ul.menu > li > a {
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  background-color: dimgray;
+  color: #fff;
+  display: block;
+  line-height: 40px;
+  height: 40px;
+  letter-spacing: 1px;
+  font-size: 1.2em;
+  font-weight: 100;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+/* line 935, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li > span:hover, #block-menu-menu-common-tasks .content > ul.menu > li > a:hover {
+  color: #69a9c4;
+  background-color: #555555;
+}
+/* line 939, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li > span:hover:before, #block-menu-menu-common-tasks .content > ul.menu > li > a:hover:before {
+  background-color: #484848;
+}
+/* line 945, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li ul {
+  display: none;
+}
+/* line 949, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li li {
+  border-top: #7b7b7b solid 1px;
+}
+/* line 955, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li li a {
+  padding: 10px 20px;
+  color: #f1f1f1;
+  letter-spacing: 1px;
+  font-weight: 100;
+  text-transform: lowercase;
+  display: block;
+}
+/* line 963, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li li a.active {
+  color: #69a9c4;
+  background-color: #626262;
+}
+/* line 968, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li li a:hover {
+  color: #69a9c4;
+  background-color: #555555;
+}
+/* line 972, ../sass/style.scss */
+#block-menu-menu-common-tasks .content > ul.menu > li li a:hover.active {
+  color: #69a9c4;
+  background-color: #555555;
+}
+/* line 983, ../sass/style.scss */
+#block-menu-menu-common-tasks [class^="icon-"]:before, #block-menu-menu-common-tasks [class*=" icon-"]:before {
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  float: left;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 1em;
+  margin-right: 10px;
+  background-color: #626262;
+}
+
+/* Media Gallery
+-------------------------------------------------------------- */
+/* line 1003, ../sass/style.scss */
+.mg-col {
+  margin: 0;
+}
+
+/* line 1007, ../sass/style.scss */
+.media-gallery-media .media-gallery-item-wrapper {
+  /*padding: 5px;*/
+  margin: 0 10px 10px 0;
+}
+
+/* line 1012, ../sass/style.scss */
+.media-gallery-media .media-gallery-item {
+  -moz-box-shadow: 11px 5px #aaa;
+  -webkit-box-shadow: 11px 5px #aaa;
+  box-shadow: 11px 5px #aaa;
+  padding: 0;
+  border: none;
+}
+/* line 1017, ../sass/style.scss */
+.media-gallery-media .media-gallery-item a {
+  cursor: move;
+}
+
+/* line 1022, ../sass/style.scss */
+.mg-col-4 > .field-items > .field-item, .mg-col-4 .mg-gallery {
+  position: relative;
+  width: 150px !important;
+  height: 150px;
+}
+
+/* line 1028, ../sass/style.scss */
+.draggable-wrapper {
+  background-color: #69a9c4;
+}
+
+/* line 1032, ../sass/style.scss */
+#edit-settings-wrapper,
+#edit-media-gallery-description {
+  display: none;
+}
+
+/* line 1039, ../sass/style.scss */
+div.vertical-tabs {
+  background-color: #d7d7d7;
+}
+/* line 1042, ../sass/style.scss */
+div.vertical-tabs .vertical-tabs-panes {
+  padding-top: 10px;
+}
+
+/* line 1047, ../sass/style.scss */
+.vertical-tabs ul.vertical-tabs-list li.selected {
+  background-color: #d7d7d7;
+}
+/* line 1050, ../sass/style.scss */
+.vertical-tabs ul.vertical-tabs-list li.selected:hover {
+  outline: none;
+}
+
+/*.image-preview{
+	float: left;
+	margin-right: 2%;
+	width: 20%;
+
+	img{
+		width: 100%;
+		height: auto;
+	}
+}*/
+/* line 1070, ../sass/style.scss */
+.image-details {
+  float: left;
+  width: 78%;
+}
+
+/* line 1077, ../sass/style.scss */
+#multiform h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  display: none;
+}
+/* line 1083, ../sass/style.scss */
+#multiform .form-holder {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  *zoom: 1;
+  border-bottom: #c8c8c8 dashed 1px;
+}
+/* line 38, ../../../../../../../.rvm/gems/ruby-2.1.2/gems/compass-core-1.0.1/stylesheets/compass/utilities/general/_clearfix.scss */
+#multiform .form-holder:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 1090, ../sass/style.scss */
+#multiform .form-group {
+  padding-top: 20px;
+}
+/* line 1094, ../sass/style.scss */
+#multiform .actions {
+  display: none;
+}
+/* line 1098, ../sass/style.scss */
+#multiform .form-submit,
+#multiform a {
+  display: block;
+  width: 200px;
+  margin: auto;
+  text-align: center;
+}
+/* line 1106, ../sass/style.scss */
+#multiform a {
+  -moz-box-shadow: 11px 5px #aaa;
+  -webkit-box-shadow: 11px 5px #aaa;
+  box-shadow: 11px 5px #aaa;
+  background-color: transparent;
+  color: #b54747;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 20px auto 100px;
+}
+
+/* line 1117, ../sass/style.scss */
+.form-hidden {
+  display: none !important;
+}
+
+/* line 1121, ../sass/style.scss */
+.actions {
+  text-align: center;
+}
+
+/* MESSAGES
+-------------------------------------------------------------- */
+/* line 1128, ../sass/style.scss */
+div.messages-holder {
+  border: none;
+  max-width: 800px;
+  margin: 0 auto 60px;
+}
+/* line 1133, ../sass/style.scss */
+div.messages-holder h1 {
+  font-size: 1em;
+  letter-spacing: 0;
+  margin-bottom: 0;
+}
+/* line 1139, ../sass/style.scss */
+div.messages-holder .messages {
+  padding: 30px;
+  font-family: "Raleway", sans-serif;
+  border: none;
+}
+/* line 1145, ../sass/style.scss */
+div.messages-holder .error,
+div.messages-holder .status {
+  background-image: none;
+}
+/* line 1150, ../sass/style.scss */
+div.messages-holder .error {
+  background-color: #b54747;
+  color: #f1f1f1;
+}
+
+/* line 1160, ../sass/style.scss */
+body div.tabledrag-changed-warning {
+  padding: 30px;
+  max-width: 800px;
+  margin: 20px auto;
+  background-image: none;
+  background-color: #f0da72;
+  color: #888;
+  border: none;
+}
+
+/* line 1172, ../sass/style.scss */
+.form-item input.error, .form-item textarea.error, .form-item select.error {
+  border: #b54747 solid 2px;
+}
+
+/* EXTRAS
+-------------------------------------------------------------- */
+/* line 1180, ../sass/style.scss */
+body.cke_show_borders {
+  margin: 0 auto;
+}
+
+/* line 1182, ../sass/style.scss */
+div.krumo-root {
+  text-align: left !important;
+  margin-left: 20%;
+}

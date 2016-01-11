@@ -1,0 +1,27 @@
+{
+  "name": "cleanslate",
+  "homepage": "thronecreative.com",
+  "authors": [
+    "bryan@thronecreative.com"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery.stellar": "latest",
+    "jquery-cycle2": "latest",
+    "waypoints": "latest",
+    "echojs": "latest",
+    "masonry": "latest",
+    "jquery.fitvids": "fitvids#~1.1.0",
+    "imagesloaded": "latest"
+  }
+}

@@ -1,0 +1,13 @@
+<?php 
+
+
+/**
+* Implements hook_entity_info_alter().
+*/
+
+function custom_view_mode_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['featured'] = array(
+    'label' => t('Featured'),
+    'custom settings' => TRUE,
+  );
+}

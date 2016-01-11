@@ -1,0 +1,25 @@
+name = The Admin
+description = This is a sub-theme of theme Rubix - adds some style tweaks.
+core = 7.x
+;base theme = rubik
+
+; CSS
+stylesheets[all][]   = css/style.css
+
+; JS
+;scripts[] = js/jquery.imagesloaded.min.js
+;scripts[] = js/jquery.masonry.min.js
+;scripts[] = js/skrollr.js
+scripts[] = js/init.js
+
+; REGIONS
+regions[page_top] = Page top
+regions[header] = Header
+regions[nav_main] = Main Navigation
+regions[highlight] = Highlight
+regions[help] = Help
+regions[content] = Content
+regions[sidebar_first] = First sidebar
+regions[footer_main] = Footer Main
+regions[page_bottom] = Page bottom
+regions[admin] = Admin

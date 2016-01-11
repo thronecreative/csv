@@ -1,0 +1,8 @@
+filename = "SiteBase-2014-08-21T09-09-17"
+description = ""
+datestamp = "1408637357"
+generator = "Backup and Migrate (http://drupal.org/project/backup_migrate)"
+generatorversion = "7.x-2.x"
+sites[0][version] = "7.29"
+sites[0][name] = "Site Base"
+sites[0][url] = "http://base.dev/"

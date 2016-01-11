@@ -1,0 +1,117 @@
+/* VARS 
+-------------------------------------------------------------- */
+$main_width:      1200px;
+$body_pad:			20px;
+$gutter:				20px;
+$header_height:	50px;
+
+$bp_lg:           1400px;
+$bp_med:          1080px;
+$bp_sm:           700px;
+
+/*  COLORS  */
+$color_main:         #000;                 
+$color_accent:       #666;              
+$color_main_lt:      #999;
+$color_error:        #b54747;
+$color_warning:      #f0da72;
+
+$page_bg:            #fff;
+$page_med:           darken($page_bg, 5%);
+$page_lt:            #405858;
+$page_dark:          #2b3232;
+
+/*  TYPOGROPHY */
+$font_main:         @include font-face("neuton", "/fonts/Neuton-Light");
+$font_header:       @include font-face("lato", "/fonts/lato-light");
+$font_fancy:        @include font-face("lato", "/fonts/lato-bold", bold);
+
+$font_weight_lt:         100;
+$font_weight_reg:        400;
+$font_weight_bold:       700;
+
+/*  TRANSITIONS  */
+$trans:	  					.3s;
+$default-transition-property : all;
+$default-transition-duration : .3s;
+$default-transition-function : false;
+$default-transition-delay    : false;
+
+$default-box-shadow-color: #111;
+$default-box-shadow-h-offset: 0px;
+$default-box-shadow-v-offset: 0px;
+$default-box-shadow-blur: 3px;
+
+/* MIX-INS 
+-------------------------------------------------------------- */
+@mixin bp($point) {
+  @if $point == l {
+    @media (max-width: $bp_lg) { @content; }
+  }
+  @else if $point == m {
+    @media (max-width: $bp_med) { @content; }
+  }
+  @else if $point == s {
+    @media (max-width: $bp_sm)  { @content; }
+  }
+}
+
+@mixin rounded($radius: 300px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin link_color($out : $color_main, $over : $color_accent) {
+	color: $out;
+
+	&:hover{
+		color: $over;
+	}
+}
+
+
+
+
+/* PLACEHOLDERS & EXTENDS
+-------------------------------------------------------------- */
+%clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+.link-invert{
+  @include link_color($color_main, $color_accent);
+}
+
+.trans-all{
+  -webkit-transition: all $trans;
+  -moz-transition: all $trans;
+  -o-transition: all $trans;
+  transition: all $trans;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
