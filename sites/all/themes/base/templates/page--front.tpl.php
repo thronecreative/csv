@@ -1,3 +1,4 @@
+<a href="/" id="logo"><span>Cambridge Street </span>Ventures</a>
 
 <div id="nav-holder">
 	<div id="menu-toggle">
@@ -33,8 +34,8 @@
 		<div id="content">
 			<section id="intro">
 				<div class="inner">
-					<a href="/" id="logo"><span>Cambridge Street </span>Ventures</a>
-					<h2>Lighting the ways<span>for dreamers...</span></h2>
+					
+					<h2>Lighting the way<span>for dreamers...</span></h2>
 					<div class="divider"></div>
 					<div class="scroll">&mdash; scroll &mdash;</div>
 				</div>

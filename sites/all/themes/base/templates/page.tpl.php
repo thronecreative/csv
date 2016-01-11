@@ -1,22 +1,29 @@
-
-<header id="header-main">
-	<div id="inner">
-		<div id="logo"><a href="/">LOGO HERE</a></div>
-		
-		<nav id="nav-main">
-			<div id="inner">
-				<?php print render($page['nav_main']); ?>
-				<div class="social-icons">
-					<a href="http://twitter.com/" class="icon-twitter" target="_blank"></a>
-					<a href="http://instagram.com/" class="icon-instagram" target="_blank"></a>
-					<a href="http://pinterest" class="icon-pinterest" target="_blank"></a>
-				</div> <!-- END .social-icons -->
-			</div>
-		</nav> <!-- END #nav -->
-
-		<div class="menu-toggle icon-list"></div>
+<div id="nav-holder">
+	<div id="menu-toggle">
+		<div class="icon-menu"></div>
+		<div class="icon-cross"></div>
 	</div>
-</header>  <!-- END header -->
+
+	<div id="nav">
+		<ul>
+			<li><a href="/#about">What we do</a></li>
+			<li><a href="/#colonel">The &ldquo;Colonel&rdquo;</a></li>
+			<li><a href="/#team">The Team</a></li>
+			<li><a href="/#projects">Projects</a></li>
+			<li><a href="/#contact" class="special">Contact Us</a></li>
+		</ul>
+
+		<div class="divider"></div>
+
+		<div class="social-icons">
+			<a href="http://twitter.com/" target="_blank" class="icon-twitter"></a>
+			<a href="http://facebook.com/" target="_blank" class="icon-facebook"></a>
+			<a href="http://instagram.com/" target="_blank" class="icon-instagram"></a>
+		</div>
+		<div class="bg"></div>
+	</div>
+
+</div>
 
 <div id="content-main">
 	<div class="inner">

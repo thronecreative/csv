@@ -57,18 +57,12 @@ $default-box-shadow-blur: 3px;
   }
 }
 
-@mixin bg_cover($url){
-  background: url($url) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  
-  @include bp(s){
-    background: url($url) no-repeat center right fixed; 
-    background-attachment: scroll;
-  }
-  
+@mixin bg_cover($url, $x: center, $y: center, $pos: fixed, $size: cover){
+  background: url($url) no-repeat $x $y $pos; 
+  -webkit-background-size: $size;
+  -moz-background-size: $size;
+  -o-background-size: $size;
+  background-size: $size;
 }
 
 @mixin rounded($radius: 300px) {

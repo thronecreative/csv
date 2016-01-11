@@ -86,6 +86,15 @@ h1{
     left: 20px;
     font-size: 20px;
   }
+
+  @include bp(s){
+    top: 80px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    display: block;
+  }
 }
 
 /* NAV
@@ -97,6 +106,8 @@ h1{
   text-align: right;
   width: $nav_w;
   z-index: 3000;
+
+  
 
   .divider{
     position: relative;
@@ -116,6 +127,10 @@ h1{
     z-index: 1;
     @include transform(rotate(-3deg));
 
+    @include bp(s){
+      display: none;
+    }
+
   }
 
 }
@@ -130,10 +145,10 @@ h1{
   height: 100vh;
   width: $nav_w;
   padding-right: $body_pad;
-  background: url(../images/30kft-pattern-1.jpg) fixed;
   
   @include bp(s){
     padding-top: 80px;
+    background-color: rgba($color_accent, 0.95)
   }
 
   a{
@@ -219,6 +234,7 @@ h1{
     display: block;
     top: 10px;
     right: 10px;
+    background-color: $color_accent;
   }
 }
 
@@ -250,15 +266,20 @@ h1{
 /* INTRO
 -------------------------------------------------------------- */
 #intro{
-  @include bg_cover("../images/lighthouse-1.jpg");
+  @include bg_cover("../images/lighthouse-1.jpg", center, right);
   min-height: 100vh;
   position: relative;
   color: #fff;
   z-index: 1;
 
+  @include bp(s){
+    @include bg_cover("../images/lighthouse-1.jpg", center, right, scroll, auto);
+  }
+
+
   h2{
     position: absolute;
-    top: 60px;
+    top: 200px;
     left: 40px;
     font-family: $font_main;
     font-weight: 200;
@@ -290,12 +311,22 @@ h1{
         margin-left: 90px;
       }
     }
+
+    @include bp(s){
+      font-size: 30px;
+      top: 120px;
+
+      span{
+        margin-top: -20px;
+        margin-left: 60px;
+      }
+    }
   }
 
   .divider{
     @include transform(rotate(135deg));
     position: absolute;
-    top: 300px;
+    top: 500px;
     left: 700px;
     height: 10px;
     width: 600px;
@@ -308,6 +339,14 @@ h1{
     @include bp(m){
       left: -80px;
       top: 250px;
+    }
+
+    @include bp(s){
+      @include transform(rotate(-20deg));
+      width: 200px;
+      top: 240px;
+      left: 70px;
+      height: 5px;
     }
   }
 
@@ -323,6 +362,10 @@ h1{
     font-style: italic;
     cursor: pointer;
     text-transform: uppercase;
+
+    @include bp(s){
+      display: none;
+    }
   }
 }
 
@@ -374,8 +417,15 @@ section.info{
     position: relative;
     z-index: 100;
     padding-right: 150px;
+    padding-left: 20px;
+
+    @include bp(s){
+      padding-right: 20px;
+    }
     
   }
+
+
 
   h1{
     font-size: 80px;
@@ -383,6 +433,10 @@ section.info{
 
     @include bp(m){
       font-size: 60px;
+    }
+
+    @include bp(s){
+      font-size: 40px;
     }
   }
 
@@ -435,7 +489,17 @@ section.info{
     top: 200px;
     right: 800px;
     max-width: 600px;
+
+    @include bp(s){
+      position: relative;
+      max-width: 100%;
+      right: 0;
+      top: auto;
+      text-align: right;
+    }
   }
+
+
 }
 
 /* CONTACT
@@ -458,6 +522,10 @@ section.info{
     font-weight: normal;
     font-style: italic;
     font-size: 30px;
+
+    @include bp(s){
+      font-size: 20px;
+    }
   }
 
   .email{
@@ -501,6 +569,10 @@ section.info{
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 4px;
+
+  @include bp(s){
+    letter-spacing: 1px;
+  }
 }
 
 /* QUOTE
@@ -527,6 +599,11 @@ section.info{
       z-index: -1;
       @include transform(rotate(-5deg));
     }
+
+    @include bp(m){
+      max-width: 90%;
+      padding: 40px;
+    }
   }
 
   .body{
@@ -535,6 +612,11 @@ section.info{
     font-weight: normal;
     font-style: italic;
     text-align: justify;
+
+    @include bp(s){
+      font-size: 20px;
+      text-align: left;
+    }
   }
 
   .author{
@@ -574,12 +656,18 @@ section.info{
     width: 33%;
     max-width: 400px;
 
+     @include bp(s){
+      width: 100%;
+      display: block;
+    }
+
   }
 }
 
 .project.teaser{
   text-align: right; 
   padding: 10px;
+  margin-bottom: 40px;
 
   .cover{
     margin-bottom: 20px;
